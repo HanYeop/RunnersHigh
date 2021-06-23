@@ -3,55 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/runFragment">
 
     <fragment
-        android:id="@+id/startFragment"
-        android:name="com.hanyeop.runnershigh.ui.fragment.StartFragment"
-        android:label="fragment_start"
-        tools:layout="@layout/fragment_start" >
-        <action
-            android:id="@+id/action_startFragment_to_nav_runFragment"
-            app:destination="@id/nav_runFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_runFragment"
+        android:id="@+id/runFragment"
         android:name="com.hanyeop.runnershigh.ui.fragment.RunFragment"
         android:label="fragment_run"
-        tools:layout="@layout/fragment_run" >
-        <action
-            android:id="@+id/action_nav_runFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-        <action
-            android:id="@+id/action_nav_runFragment_to_trackingFragment"
-            app:destination="@id/trackingFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_run" />
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.hanyeop.runnershigh.ui.fragment.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
-        <action
-            android:id="@+id/action_detailFragment_to_nav_runFragment"
-            app:destination="@id/nav_runFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_settingFragment"
+        android:id="@+id/settingFragment"
         android:name="com.hanyeop.runnershigh.ui.fragment.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
-        android:id="@+id/nav_statisticsFragment"
+        android:id="@+id/statisticsFragment"
         android:name="com.hanyeop.runnershigh.ui.fragment.StatisticsFragment"
         android:label="fragment_statistics"
         tools:layout="@layout/fragment_statistics" />
-    <fragment
-        android:id="@+id/trackingFragment"
-        android:name="com.hanyeop.runnershigh.ui.fragment.TrackingFragment"
-        android:label="fragment_tracking"
-        tools:layout="@layout/fragment_tracking" >
-        <action
-            android:id="@+id/action_trackingFragment_to_nav_runFragment"
-            app:destination="@id/nav_runFragment" />
-    </fragment>
 </navigation>
