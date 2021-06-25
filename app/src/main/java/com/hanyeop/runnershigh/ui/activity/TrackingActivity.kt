@@ -1,9 +1,12 @@
 package com.hanyeop.runnershigh.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.gms.maps.GoogleMap
 import com.hanyeop.runnershigh.databinding.ActivityTrackingBinding
+import com.hanyeop.runnershigh.service.TrackingService
+import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,9 +31,20 @@ class TrackingActivity : AppCompatActivity() {
             mapView.getMapAsync {
                 map = it
             }
+
+            // 스타트 버튼 클릭 시 서비스를 시작함
+            startButton.setOnClickListener {
+                sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+            }
         }
     }
 
+    // 서비스에게 명령을 전달함
+    private fun sendCommandToService(action : String) =
+        Intent(this,TrackingService::class.java).also {
+            it.action = action
+            this.startService(it)
+        }
 
 
 
