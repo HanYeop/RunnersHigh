@@ -52,10 +52,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     def room_version = "2.3.0"
-    // room
+    // Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    // room 코루틴
+    // Room 코루틴
     implementation "androidx.room:room-ktx:$room_version"
 
     // Dagger Hilt
@@ -65,6 +65,8 @@ dependencies {
 
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
+    // Activity KTX for viewModels()
+    implementation "androidx.activity:activity-ktx:1.1.0"
 
     // Navigation
     def nav_version = "2.3.3"

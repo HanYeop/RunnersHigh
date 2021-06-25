@@ -1,14 +1,18 @@
 package com.hanyeop.runnershigh.ui.fragment
 
-import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.hanyeop.runnershigh.R
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hanyeop.runnershigh.databinding.FragmentRunBinding
-import com.hanyeop.runnershigh.ui.activity.TrackingActivity
+import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,11 +32,29 @@ class RunFragment : Fragment(R.layout.fragment_run) {
         // 뷰바인딩
         _binding = FragmentRunBinding.bind(view)
 
-        // fab 클릭 시 Tracking 화면으로 이등
         binding.apply {
+
+            // fab 클릭 시 Tracking 화면으로 이등
             runStartFab.setOnClickListener {
-                val intent = Intent(activity,TrackingActivity::class.java)
-                startActivity(intent)
+
+                // 권한 체크해서 권한이 있을 때
+                if(ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED){
+
+                    findNavController().navigate(R.id.action_runFragment_to_trackingActivity)
+                }
+
+                // 권한이 없을 때 권한을 요구함
+                else {
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                        1
+                    )
+                }
             }
         }
     }

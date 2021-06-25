@@ -9,7 +9,11 @@
         android:id="@+id/runFragment"
         android:name="com.hanyeop.runnershigh.ui.fragment.RunFragment"
         android:label="fragment_run"
-        tools:layout="@layout/fragment_run" />
+        tools:layout="@layout/fragment_run" >
+        <action
+            android:id="@+id/action_runFragment_to_trackingActivity"
+            app:destination="@id/trackingActivity" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.hanyeop.runnershigh.ui.fragment.SettingFragment"
@@ -20,4 +24,9 @@
         android:name="com.hanyeop.runnershigh.ui.fragment.StatisticsFragment"
         android:label="fragment_statistics"
         tools:layout="@layout/fragment_statistics" />
+    <activity
+        android:id="@+id/trackingActivity"
+        android:name="com.hanyeop.runnershigh.ui.activity.TrackingActivity"
+        android:label="activity_tracking"
+        tools:layout="@layout/activity_tracking" />
 </navigation>
