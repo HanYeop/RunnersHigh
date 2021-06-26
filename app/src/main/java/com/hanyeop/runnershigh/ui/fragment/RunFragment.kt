@@ -43,6 +43,7 @@ class RunFragment : Fragment(R.layout.fragment_run) {
                     && ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
                     findNavController().navigate(R.id.action_runFragment_to_trackingActivity)
+//                    findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
                 }
 
                 // 권한이 없을 때 권한을 요구함

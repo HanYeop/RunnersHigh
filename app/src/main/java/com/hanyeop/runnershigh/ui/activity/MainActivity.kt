@@ -1,5 +1,6 @@
 package com.hanyeop.runnershigh.ui.activity
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivityMainBinding
 import com.hanyeop.runnershigh.util.Constants
+import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_SHOW_TRACKING_ACTIVITY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,7 +45,15 @@ class MainActivity : AppCompatActivity() {
             navController = navHostFragment.findNavController()
             bottomNavigation.setupWithNavController(navController)
 
+//            navController.addOnDestinationChangedListener { _, destination, _ ->
+//                    when (destination.id) {
+//                        R.id.trackingFragment -> bottomNavigation.visibility =
+//                            View.GONE
+//                        else -> bottomNavigation.visibility = View.VISIBLE
+//                    }
+//                }
         }
+        navigateToTrackingFragmentIfNeeded(intent)
     }
 
     // 권한 요청 결과 처리
@@ -61,6 +71,17 @@ class MainActivity : AppCompatActivity() {
             else{
                 Snackbar.make(binding.root, "권한에 동의하지 않을 경우 이용할 수 없습니다.", Snackbar.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigateToTrackingFragmentIfNeeded(intent)
+    }
+
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+        if(intent?.action == ACTION_SHOW_TRACKING_ACTIVITY) {
+            navController.navigate(R.id.trackingActivity)
         }
     }
 }

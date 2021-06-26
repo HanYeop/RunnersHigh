@@ -5,6 +5,14 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/runFragment">
 
+    <action android:id="@+id/action_global_trackingActivity"
+        app:destination="@id/trackingActivity"
+        app:launchSingleTop="true"/>
+
+    <action android:id="@+id/action_global_trackingFragment"
+        app:destination="@id/trackingFragment"
+        app:launchSingleTop="true"/>
+
     <fragment
         android:id="@+id/runFragment"
         android:name="com.hanyeop.runnershigh.ui.fragment.RunFragment"
@@ -13,6 +21,9 @@
         <action
             android:id="@+id/action_runFragment_to_trackingActivity"
             app:destination="@id/trackingActivity" />
+        <action
+            android:id="@+id/action_runFragment_to_trackingFragment"
+            app:destination="@id/trackingFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -29,4 +40,9 @@
         android:name="com.hanyeop.runnershigh.ui.activity.TrackingActivity"
         android:label="activity_tracking"
         tools:layout="@layout/activity_tracking" />
+    <fragment
+        android:id="@+id/trackingFragment"
+        android:name="com.hanyeop.runnershigh.ui.fragment.TrackingFragment"
+        android:label="fragment_tracking"
+        tools:layout="@layout/fragment_tracking" />
 </navigation>
