@@ -54,6 +54,7 @@ class TrackingService : LifecycleService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    // Notification 등록
     private fun startForegroundService(){
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -73,6 +74,7 @@ class TrackingService : LifecycleService() {
         startForeground(NOTIFICATION_ID,notificationBuilder.build())
     }
 
+    // 알림 클릭 시 이동할 액티비티
     private fun getMainActivityPendingIntent() = PendingIntent.getActivity(
         this,0,
         Intent(this,MainActivity::class.java).also {
