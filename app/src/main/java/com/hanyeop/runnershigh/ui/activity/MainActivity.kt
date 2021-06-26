@@ -44,14 +44,6 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentById(R.id.mainContainerView) as NavHostFragment
             navController = navHostFragment.findNavController()
             bottomNavigation.setupWithNavController(navController)
-
-//            navController.addOnDestinationChangedListener { _, destination, _ ->
-//                    when (destination.id) {
-//                        R.id.trackingFragment -> bottomNavigation.visibility =
-//                            View.GONE
-//                        else -> bottomNavigation.visibility = View.VISIBLE
-//                    }
-//                }
         }
         navigateToTrackingFragmentIfNeeded(intent)
     }
