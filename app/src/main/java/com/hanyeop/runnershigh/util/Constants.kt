@@ -1,5 +1,7 @@
 package com.hanyeop.runnershigh.util
 
+import android.graphics.Color
+
 class Constants {
 
     companion object{
@@ -20,9 +22,18 @@ class Constants {
         const val NOTIFICATION_CHANNEL_NAME = "Tracking"
         const val NOTIFICATION_ID = 1 // 채널 ID는 0이면 안됨
 
-        // Tracking 옵션
+        /**
+         * Tracking 옵션
+         */
         const val LOCATION_UPDATE_INTERVAL = 5000L
         const val FASTEST_LOCATION_UPDATE_INTERVAL = 2000L
+
+        /**
+         * 경로 표시 옵션
+         */
+        const val POLYLINE_COLOR = Color.RED
+        const val POLYLINE_WIDTH = 10f
+        const val MAP_ZOOM = 15f
 
     }
 }

@@ -40,16 +40,14 @@ typealias Polylines = MutableList<Polyline>
 
 class TrackingService : LifecycleService() {
 
-    // 중복 실행 방지
-    private var running = false
+    // 처음 실행 여부
+    private var isFirstRun = false
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     companion object{
-        val isTracking = MutableLiveData<Boolean>()
+        val isTracking = MutableLiveData<Boolean>() // 위치 추적 상태 여부
         val pathPoints = MutableLiveData<Polylines>() // LatLng = 위도,경도
-//       == val pathPoints = MutableLiveData<MutableList<MutableList<LatLng>>>() // LatLng = 위도,경도
-
     }
 
     // 초기화
@@ -126,17 +124,19 @@ class TrackingService : LifecycleService() {
             when(it.action){
                 // 시작, 재개 되었을 때
                 ACTION_START_OR_RESUME_SERVICE ->{
-                    if(!running){
+                    if(!isFirstRun){
                         Log.d(TAG, "시작함 ")
                         startForegroundService()
-                        running = true
+                        isFirstRun = true
                     }else{
+                        startForegroundService() // 테스트용
                         Log.d(TAG, "실행중 ")
                     }
                 }
                 // 중지 되었을 때
                 ACTION_PAUSE_SERVICE ->{
                     Log.d(TAG, "중지 ")
+                    pauseService()
                 }
                 // 종료 되었을 때
                 ACTION_STOP_SERVICE ->{
@@ -146,6 +146,11 @@ class TrackingService : LifecycleService() {
             }
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    // 서비스 일시정지
+   private fun pauseService(){
+        isTracking.postValue(false)
     }
 
     // Notification 등록, 서비스 시작
