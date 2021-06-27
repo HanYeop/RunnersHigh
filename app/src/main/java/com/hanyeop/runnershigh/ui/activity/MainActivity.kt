@@ -58,7 +58,16 @@ class MainActivity : AppCompatActivity() {
 
         if(requestCode == 1){
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Snackbar.make(binding.root, "위치 권한이 동의 되었습니다.", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "기본 위치 권한이 동의 되었습니다.", Snackbar.LENGTH_SHORT).show()
+            }
+            else{
+                Snackbar.make(binding.root, "권한에 동의하지 않을 경우 이용할 수 없습니다.", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        else if(requestCode == 2){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Snackbar.make(binding.root, "백그라운드 위치 권한이 동의 되었습니다.", Snackbar.LENGTH_SHORT).show()
             }
             else{
                 Snackbar.make(binding.root, "권한에 동의하지 않을 경우 이용할 수 없습니다.", Snackbar.LENGTH_SHORT).show()
