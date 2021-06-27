@@ -78,11 +78,11 @@ class TrackingActivity : AppCompatActivity() {
         this.isTracking = isTracking
         binding.apply {
             if (!isTracking) {
-            startButton.text = "시작하기"
+            startButton.text = "다시 시작하기"
             finishButton.visibility = View.VISIBLE
             }
             else if (isTracking) {
-                startButton.text = "일시 정지하기"
+                startButton.text = "정지하기"
                 finishButton.visibility = View.GONE
             }
         }
