@@ -1,6 +1,7 @@
 package com.hanyeop.runnershigh.ui.fragment
 
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hanyeop.runnershigh.databinding.FragmentRunBinding
 import com.hanyeop.runnershigh.util.Constants.Companion.TAG
+import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,22 +40,28 @@ class RunFragment : Fragment(R.layout.fragment_run) {
             runStartFab.setOnClickListener {
 
                 // 권한 체크해서 권한이 있을 때
-                if(ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED){
-
+                if(TrackingUtility.hasLocationPermissions(requireContext())){
                     findNavController().navigate(R.id.action_runFragment_to_trackingActivity)
                 }
-
                 // 권한이 없을 때 권한을 요구함
                 else {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                            android.Manifest.permission.ACCESS_FINE_LOCATION,
-                            android.Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                        1
-                    )
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        ActivityCompat.requestPermissions(
+                            requireActivity(),
+                            arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                                android.Manifest.permission.ACCESS_FINE_LOCATION),
+                            1
+                        ) // 수정필요
+                    }
+                    // API 23 미만 버전에서는 ACCESS_BACKGROUND_LOCATION X
+                    else{
+                        ActivityCompat.requestPermissions(
+                            requireActivity(),
+                            arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                                android.Manifest.permission.ACCESS_FINE_LOCATION),
+                            1
+                        )
+                    }
                 }
             }
         }

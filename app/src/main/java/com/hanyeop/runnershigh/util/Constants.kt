@@ -20,5 +20,9 @@ class Constants {
         const val NOTIFICATION_CHANNEL_NAME = "Tracking"
         const val NOTIFICATION_ID = 1 // 채널 ID는 0이면 안됨
 
+        // Tracking 옵션
+        const val LOCATION_UPDATE_INTERVAL = 5000L
+        const val FASTEST_LOCATION_UPDATE_INTERVAL = 2000L
+
     }
 }
