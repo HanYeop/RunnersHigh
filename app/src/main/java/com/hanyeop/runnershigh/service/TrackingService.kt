@@ -33,7 +33,12 @@ import com.hanyeop.runnershigh.util.Constants.Companion.NOTIFICATION_CHANNEL_ID
 import com.hanyeop.runnershigh.util.Constants.Companion.NOTIFICATION_CHANNEL_NAME
 import com.hanyeop.runnershigh.util.Constants.Companion.NOTIFICATION_ID
 import com.hanyeop.runnershigh.util.Constants.Companion.TAG
+import com.hanyeop.runnershigh.util.Constants.Companion.TIMER_UPDATE_INTERVAL
 import com.hanyeop.runnershigh.util.TrackingUtility
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 typealias Polyline = MutableList<LatLng>
 typealias Polylines = MutableList<Polyline>
@@ -43,17 +48,31 @@ class TrackingService : LifecycleService() {
     // 처음 실행 여부
     private var isFirstRun = false
 
+    // FusedLocationProviderClient 선언
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    // 알림창에 표시될 시간
+    private val timeRunInSeconds = MutableLiveData<Long>()
+
+    private var isTimerEnabled = false // 타이머 실행 여부
+    private var lapTime = 0L // 시작 후 측정한 시간
+    private var totalTime = 0L // 정지 시 저장되는 시간
+    private var timeStarted = 0L // 측정 시작된 시간
+    private var lastSecondTimestamp = 0L // 1초 단위 체크를 위함
+
 
     companion object{
         val isTracking = MutableLiveData<Boolean>() // 위치 추적 상태 여부
         val pathPoints = MutableLiveData<Polylines>() // LatLng = 위도,경도
+        val timeRunInMillis = MutableLiveData<Long>() // 뷰에 표시될 시간
     }
 
     // 초기화
     private fun postInitialValues() {
         isTracking.postValue(false)
         pathPoints.postValue(mutableListOf())
+        timeRunInSeconds.postValue(0L)
+        timeRunInMillis.postValue(0L)
     }
 
     override fun onCreate() {
@@ -65,6 +84,32 @@ class TrackingService : LifecycleService() {
         isTracking.observe(this, Observer {
             updateLocation(it)
         })
+    }
+
+    // 타이머 시작
+    private fun startTimer(){
+        addEmptyPolyline()
+        isTracking.postValue(true)
+        timeStarted = System.currentTimeMillis()
+        isTimerEnabled = true
+
+        CoroutineScope(Dispatchers.Main).launch {
+            // 위치 추적 상태일 때
+            while (isTracking.value!!){
+                // 현재 시간 - 시작 시간 => 경과한 시간
+                lapTime = System.currentTimeMillis() - timeStarted
+                // 총시간 (일시정지시 저장된 시간) + 경과시간 전달
+                timeRunInMillis.postValue(totalTime + lapTime)
+                // 알림창에 표시될 시간 초 단위로 계산함
+                if(timeRunInMillis.value!! >= lastSecondTimestamp + 1000L){
+                    timeRunInSeconds.postValue(timeRunInSeconds.value!! + 1)
+                    lastSecondTimestamp += 1000L
+                }
+                delay(TIMER_UPDATE_INTERVAL)
+            }
+            // 위치 추적이 종료되었을 때 총시간 저장
+            totalTime += lapTime
+        }
     }
 
     // 빈 polyline 추가
@@ -129,8 +174,8 @@ class TrackingService : LifecycleService() {
                         startForegroundService()
                         isFirstRun = true
                     }else{
-                        startForegroundService() // 테스트용
                         Log.d(TAG, "실행중 ")
+                        startTimer()
                     }
                 }
                 // 중지 되었을 때
@@ -151,12 +196,14 @@ class TrackingService : LifecycleService() {
     // 서비스 일시정지
    private fun pauseService(){
         isTracking.postValue(false)
+        isTimerEnabled = false
     }
 
     // Notification 등록, 서비스 시작
     private fun startForegroundService(){
-        addEmptyPolyline()
-        isTracking.postValue(true)
+//        addEmptyPolyline()
+//        isTracking.postValue(true)
+        startTimer()
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

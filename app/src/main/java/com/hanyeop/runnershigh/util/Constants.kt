@@ -35,5 +35,8 @@ class Constants {
         const val POLYLINE_WIDTH = 10f
         const val MAP_ZOOM = 15f
 
+        // 타이머 갱신 주기
+        const val TIMER_UPDATE_INTERVAL = 50L
+
     }
 }

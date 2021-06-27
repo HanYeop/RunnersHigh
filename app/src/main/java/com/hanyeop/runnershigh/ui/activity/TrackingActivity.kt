@@ -16,6 +16,7 @@ import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_START_OR_RESUME_S
 import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
+import com.hanyeop.runnershigh.util.TrackingUtility
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,8 +28,10 @@ class TrackingActivity : AppCompatActivity() {
     // 구글맵 선언
     private var map: GoogleMap? = null
 
+    // 라이브 데이터를 받아온 값들
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
+    private var currentTimeInMillis = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +73,13 @@ class TrackingActivity : AppCompatActivity() {
             pathPoints = it
             addLatestPolyline()
             moveCameraToUser()
+        })
+
+        // 시간(타이머) 경과 관찰
+        TrackingService.timeRunInMillis.observe(this, Observer {
+            currentTimeInMillis = it
+            val formattedTime = TrackingUtility.getFormattedStopWatchTime(it, true)
+            binding.timerText.text = formattedTime
         })
     }
 
