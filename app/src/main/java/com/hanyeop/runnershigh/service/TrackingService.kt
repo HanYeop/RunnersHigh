@@ -35,21 +35,32 @@ import com.hanyeop.runnershigh.util.Constants.Companion.NOTIFICATION_ID
 import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.Constants.Companion.TIMER_UPDATE_INTERVAL
 import com.hanyeop.runnershigh.util.TrackingUtility
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 typealias Polyline = MutableList<LatLng>
 typealias Polylines = MutableList<Polyline>
 
+@AndroidEntryPoint
 class TrackingService : LifecycleService() {
 
     // 처음 실행 여부
     private var isFirstRun = false
 
-    // FusedLocationProviderClient 선언
+    // FusedLocationProviderClient 주입
+    @Inject
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    // NotificationCompat.Builder 주입
+    @Inject
+    lateinit var baseNotificationBuilder: NotificationCompat.Builder
+
+    // NotificationCompat.Builder 수정하기 위함
+    lateinit var currentNotificationBuilder : NotificationCompat.Builder
 
     // 알림창에 표시될 시간
     private val timeRunInSeconds = MutableLiveData<Long>()
@@ -77,13 +88,44 @@ class TrackingService : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
+        currentNotificationBuilder = baseNotificationBuilder
         postInitialValues()
-        fusedLocationProviderClient = FusedLocationProviderClient(this)
+//        fusedLocationProviderClient = FusedLocationProviderClient(this)
 
         // 위치 추적 상태가 되면 업데이트 호출
         isTracking.observe(this, Observer {
             updateLocation(it)
+            updateNotificationTrackingState(it)
         })
+    }
+
+    // 알림창 버튼 생성, 액션 추가
+    private fun updateNotificationTrackingState(isTracking: Boolean) {
+        val notificationActionText = if (isTracking) "일시정지" else "다시 시작하기"
+        // 정지 or 시작 버튼 클릭 시 그에 맞는 액션 전달함
+        val pendingIntent = if (isTracking) {
+            val pauseIntent = Intent(this, TrackingService::class.java).apply {
+                action = ACTION_PAUSE_SERVICE
+            }
+            PendingIntent.getService(this, 1, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        } else {
+            val resumeIntent = Intent(this, TrackingService::class.java).apply {
+                action = ACTION_START_OR_RESUME_SERVICE
+            }
+            PendingIntent.getService(this, 2, resumeIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        currentNotificationBuilder.javaClass.getDeclaredField("mActions").apply {
+            isAccessible = true
+            set(currentNotificationBuilder, ArrayList<NotificationCompat.Action>())
+        }
+
+        currentNotificationBuilder = baseNotificationBuilder
+            .addAction(R.drawable.ic_baseline_directions_run_24, notificationActionText, pendingIntent)
+        notificationManager.notify(NOTIFICATION_ID, currentNotificationBuilder.build())
     }
 
     // 타이머 시작
@@ -212,24 +254,15 @@ class TrackingService : LifecycleService() {
             createNotificationChannel(notificationManager)
         }
 
-        val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-            .setAutoCancel(false)
-            .setOngoing(true)
-            .setSmallIcon(R.drawable.ic_baseline_directions_run_24)
-            .setContentTitle("Runner's High!")
-            .setContentText("00:00:00")
-            .setContentIntent(getMainActivityPendingIntent())
+        startForeground(NOTIFICATION_ID,baseNotificationBuilder.build())
 
-        startForeground(NOTIFICATION_ID,notificationBuilder.build())
+        // 초가 흐를때마다 알림창의 시간 갱신
+        timeRunInSeconds.observe(this, Observer {
+            val notification = currentNotificationBuilder
+                .setContentText(TrackingUtility.getFormattedStopWatchTime(it * 1000L))
+            notificationManager.notify(NOTIFICATION_ID, notification.build())
+        })
     }
-
-    // 알림 클릭 시 이동할 액티비티
-    private fun getMainActivityPendingIntent() = PendingIntent.getActivity(
-        this,0,
-        Intent(this,MainActivity::class.java).also {
-            it.action = ACTION_SHOW_TRACKING_ACTIVITY
-        }, PendingIntent.FLAG_UPDATE_CURRENT
-    )
 
     // 채널 만들기
     @RequiresApi(Build.VERSION_CODES.O)
