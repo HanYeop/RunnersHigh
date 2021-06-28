@@ -132,7 +132,14 @@ class TrackingActivity : AppCompatActivity() {
             this.startService(it)
         }
 
+    override fun onBackPressed() {
+        if(currentTimeInMillis > 0L){
 
+        }
+        else{
+            super.onBackPressed()
+        }
+    }
 
     /**
      * 라이프 사이클에 맞게 맵뷰를 처리해줌

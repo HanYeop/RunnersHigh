@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.hanyeop.runnershigh.R
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.hanyeop.runnershigh.databinding.FragmentRunBinding
 import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
@@ -96,15 +97,12 @@ class RunFragment : Fragment(R.layout.fragment_run) {
     private fun permissionDialog(context : Context){
         var builder = AlertDialog.Builder(context)
         builder.setTitle("백그라운드 위치 권한을 위해 항상 허용으로 설정해주세요.")
-
-        var listener = DialogInterface.OnClickListener { _, p1 ->
-            when (p1) {
-                DialogInterface.BUTTON_POSITIVE ->
-                    backgroundPermission()
+            .setPositiveButton("네"){ _,_ ->
+                backgroundPermission()
             }
-        }
-        builder.setPositiveButton("네", listener)
-        builder.setNegativeButton("아니오", null)
+            .setNegativeButton("아니오"){_,_ ->
+                null
+            }.create()
 
         builder.show()
     }
