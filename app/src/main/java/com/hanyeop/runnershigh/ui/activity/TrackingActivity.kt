@@ -1,18 +1,23 @@
 package com.hanyeop.runnershigh.ui.activity
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.PolylineOptions
+import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivityTrackingBinding
 import com.hanyeop.runnershigh.service.Polyline
 import com.hanyeop.runnershigh.service.TrackingService
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_PAUSE_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
+import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_STOP_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
@@ -132,9 +137,29 @@ class TrackingActivity : AppCompatActivity() {
             this.startService(it)
         }
 
+    // 저장하지 않고 종료
+    private fun stopRun() {
+        binding.timerText.text = "00:00:00:00"
+        sendCommandToService(ACTION_STOP_SERVICE)
+        finish()
+    }
+
+    // 뒤로가기 버튼 눌렀을 때
     override fun onBackPressed() {
         if(currentTimeInMillis > 0L){
-
+            // 잠시 정지시킴
+            sendCommandToService(ACTION_PAUSE_SERVICE)
+            var builder = AlertDialog.Builder(this)
+            builder.setTitle("달리기를 취소할까요? 기록은 저장되지 않습니다.")
+                .setPositiveButton("네"){ _,_ ->
+                    // 달리기 종료시킴 (저장X)
+                    stopRun()
+                }
+                .setNegativeButton("아니오"){_,_ ->
+                    // 다시 시작
+                    sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+                }.create()
+            builder.show()
         }
         else{
             super.onBackPressed()

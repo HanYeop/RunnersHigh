@@ -50,6 +50,8 @@ class TrackingService : LifecycleService() {
 
     // 처음 실행 여부
     private var isFirstRun = false
+    // 서비스 종료 여부
+    private var serviceKilled = false
 
     // FusedLocationProviderClient 주입
     @Inject
@@ -99,6 +101,16 @@ class TrackingService : LifecycleService() {
         })
     }
 
+    // 서비스가 종료 되었을 때
+    private fun killService(){
+        serviceKilled = true
+        isFirstRun = true
+        pauseService()
+        postInitialValues()
+        stopForeground(true)
+        stopSelf()
+    }
+
     // 알림창 버튼 생성, 액션 추가
     private fun updateNotificationTrackingState(isTracking: Boolean) {
         val notificationActionText = if (isTracking) "일시정지" else "다시 시작하기"
@@ -123,9 +135,16 @@ class TrackingService : LifecycleService() {
             set(currentNotificationBuilder, ArrayList<NotificationCompat.Action>())
         }
 
-        currentNotificationBuilder = baseNotificationBuilder
-            .addAction(R.drawable.ic_baseline_directions_run_24, notificationActionText, pendingIntent)
-        notificationManager.notify(NOTIFICATION_ID, currentNotificationBuilder.build())
+        // 서비스 종료상태가 아닐 때
+        if(!serviceKilled) {
+            currentNotificationBuilder = baseNotificationBuilder
+                .addAction(
+                    R.drawable.ic_baseline_directions_run_24,
+                    notificationActionText,
+                    pendingIntent
+                )
+            notificationManager.notify(NOTIFICATION_ID, currentNotificationBuilder.build())
+        }
     }
 
     // 타이머 시작
@@ -228,6 +247,7 @@ class TrackingService : LifecycleService() {
                 // 종료 되었을 때
                 ACTION_STOP_SERVICE ->{
                     Log.d(TAG, "종료 ")
+                    killService()
                 }
                 else -> null
             }
@@ -235,7 +255,7 @@ class TrackingService : LifecycleService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    // 서비스 일시정지
+    // 서비스 정지
    private fun pauseService(){
         isTracking.postValue(false)
         isTimerEnabled = false
@@ -258,9 +278,12 @@ class TrackingService : LifecycleService() {
 
         // 초가 흐를때마다 알림창의 시간 갱신
         timeRunInSeconds.observe(this, Observer {
-            val notification = currentNotificationBuilder
-                .setContentText(TrackingUtility.getFormattedStopWatchTime(it * 1000L))
-            notificationManager.notify(NOTIFICATION_ID, notification.build())
+            // 서비스 종료상태가 아닐 때
+            if(!serviceKilled) {
+                val notification = currentNotificationBuilder
+                    .setContentText(TrackingUtility.getFormattedStopWatchTime(it * 1000L))
+                notificationManager.notify(NOTIFICATION_ID, notification.build())
+            }
         })
     }
 
