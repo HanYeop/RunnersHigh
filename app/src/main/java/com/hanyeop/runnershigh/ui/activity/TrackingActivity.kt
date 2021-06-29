@@ -5,14 +5,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.snackbar.Snackbar
 import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivityTrackingBinding
+import com.hanyeop.runnershigh.model.Run
 import com.hanyeop.runnershigh.service.Polyline
 import com.hanyeop.runnershigh.service.TrackingService
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_PAUSE_SERVICE
@@ -22,13 +28,19 @@ import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
 import com.hanyeop.runnershigh.util.TrackingUtility
+import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.math.round
 
 @AndroidEntryPoint
 class TrackingActivity : AppCompatActivity() {
 
     // ActivityTrackingBinding 선언
     private lateinit var binding : ActivityTrackingBinding
+
+    // 뷰모델 생성
+    private val viewModel by viewModels<RunViewModel>()
 
     // 구글맵 선언
     private var map: GoogleMap? = null
@@ -69,6 +81,12 @@ class TrackingActivity : AppCompatActivity() {
                     sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
                 }
             }
+
+            // 종료 버튼 클릭 시 저장하고 종료
+            finishButton.setOnClickListener {
+                zoomToWholeTrack()
+                endRunAndSaveToDB()
+            }
         }
 
         // 위치 추적 여부 관찰하여 updateTracking 호출
@@ -89,6 +107,47 @@ class TrackingActivity : AppCompatActivity() {
             val formattedTime = TrackingUtility.getFormattedStopWatchTime(it, true)
             binding.timerText.text = formattedTime
         })
+    }
+
+    // 스냅샷 찍기 위하여 전체 경로가 다 보이게 줌
+    private fun zoomToWholeTrack() {
+        val bounds = LatLngBounds.Builder()
+        for (polyline in pathPoints) {
+            for (point in polyline) {
+                bounds.include(point)
+            }
+        }
+        val width = binding.mapView.width
+        val height = binding.mapView.height
+        map?.moveCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds.build(),
+                width,
+                height,
+                (height * 0.05f).toInt()
+            )
+        )
+    }
+
+    var weight = 70f // 임의값
+    // 달리기 기록 저장
+    private fun endRunAndSaveToDB() {
+        map?.snapshot { bmp ->
+            var distanceInMeters = 0 // 이동거리
+            for (polyline in pathPoints) {
+                distanceInMeters += TrackingUtility.calculatePolylineLength(polyline).toInt()
+            }
+            // 반올림
+            val avgSpeed =
+                round((distanceInMeters / 1000f) / (currentTimeInMillis / 1000f / 60 / 60) * 10) / 10f
+            val timestamp = Calendar.getInstance().timeInMillis
+            val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
+            val run =
+                Run(bmp, timestamp, avgSpeed, distanceInMeters, currentTimeInMillis, caloriesBurned)
+            viewModel.insertRun(run)
+            Toast.makeText(this, "달리기 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+            stopRun()
+        }
     }
 
     // 위치 추적 상태에 따른 레이아웃 변경
@@ -151,7 +210,7 @@ class TrackingActivity : AppCompatActivity() {
             this.startService(it)
         }
 
-    // 저장하지 않고 종료
+    // 달리기 종료
     private fun stopRun() {
         binding.timerText.text = "00:00:00:00"
         sendCommandToService(ACTION_STOP_SERVICE)
