@@ -50,9 +50,12 @@ class TrackingActivity : AppCompatActivity() {
             // 맵 불러오기
             mapView.getMapAsync {
                 map = it
+                // 알림 클릭 등으로 다시 생성되었을 때 경로 표시
+                addAllPolylines()
                 /**
                  * 위치 처음에 줌하는거 구현해야함
                  */
+
             }
 
             // 스타트 버튼 클릭 시 서비스를 시작함
@@ -100,6 +103,17 @@ class TrackingActivity : AppCompatActivity() {
                 startButton.text = "정지하기"
                 finishButton.visibility = View.GONE
             }
+        }
+    }
+
+    // 경로 전부 표시
+    private fun addAllPolylines() {
+        for (polyline in pathPoints) {
+            val polylineOptions = PolylineOptions()
+                .color(POLYLINE_COLOR)
+                .width(POLYLINE_WIDTH)
+                .addAll(polyline)
+            map?.addPolyline(polylineOptions)
         }
     }
 
@@ -171,6 +185,8 @@ class TrackingActivity : AppCompatActivity() {
      */
     override fun onResume() {
         binding.mapView.onResume()
+        // 백그라운드 상태에서 돌아왔을 때 경로 표시
+        addAllPolylines()
         super.onResume()
     }
 
