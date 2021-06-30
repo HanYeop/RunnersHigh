@@ -36,6 +36,8 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
                 distanceText.text = "${run.distanceInMeters / 1000f}km"
                 timeText.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
                 caloriesText.text = "${run.caloriesBurned}kcal"
+                dateText.text = "${yearFormat.format(calendar.time)}/${monthFormat.format(calendar.time)}/" +
+                        "${dayFormat.format(calendar.time)}"
             }
         }
     }

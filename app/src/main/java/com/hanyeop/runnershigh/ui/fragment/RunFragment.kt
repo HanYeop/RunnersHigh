@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.hanyeop.runnershigh.R
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hanyeop.runnershigh.adapter.RunAdapter
 import com.hanyeop.runnershigh.databinding.FragmentRunBinding
+import com.hanyeop.runnershigh.util.SortType
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,13 +53,34 @@ class RunFragment : Fragment(R.layout.fragment_run) {
                 }
             }
 
+            // 스피너 값 변경시 뷰모델에 전달
+            sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+
+                override fun onItemSelected(
+                    adapterView: AdapterView<*>?,
+                    view: View?,
+                    pos: Int,
+                    id: Long
+                ) {
+                    when (pos) {
+                        0 -> viewModel.sortRuns(SortType.DATE)
+                        1 -> viewModel.sortRuns(SortType.RUNNING_TIME)
+                        2 -> viewModel.sortRuns(SortType.DISTANCE)
+                        3 -> viewModel.sortRuns(SortType.AVG_SPEED)
+                        4 -> viewModel.sortRuns(SortType.CALORIES_BURNED)
+                    }
+                }
+            }
+
             // 어댑터 연결
             runAdapter = RunAdapter()
             runRecyclerView.adapter = runAdapter
             runRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+        // 목록 관찰하여 변경시 목록 변경
+        viewModel.runs.observe(viewLifecycleOwner, Observer {
             runAdapter.submitList(it)
         })
     }
