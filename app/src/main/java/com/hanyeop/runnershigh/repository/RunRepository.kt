@@ -12,4 +12,6 @@ class RunRepository @Inject constructor(
     suspend fun insertRun(run : Run) = runDao.insertRun(run)
 
     suspend fun deleteRun(run : Run) = runDao.deleteRun(run)
+
+    fun getAllRunsSortedByDate() = runDao.getAllRunsSortedByDate()
 }

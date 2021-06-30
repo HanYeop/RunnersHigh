@@ -2,22 +2,18 @@ package com.hanyeop.runnershigh.ui.fragment
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.hanyeop.runnershigh.R
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hanyeop.runnershigh.adapter.RunAdapter
 import com.hanyeop.runnershigh.databinding.FragmentRunBinding
-import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,18 +28,19 @@ class RunFragment : Fragment(R.layout.fragment_run) {
     private var _binding : FragmentRunBinding? = null
     private val binding get() = _binding!!
 
+    // RunAdapter 선언
+    private lateinit var runAdapter: RunAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // 뷰바인딩
         _binding = FragmentRunBinding.bind(view)
 
-
         binding.apply {
 
             // fab 클릭 시 Tracking 화면으로 이등
             runStartFab.setOnClickListener {
-
                 // 권한 체크해서 권한이 있을 때
                 if(TrackingUtility.hasLocationPermissions(requireContext())){
                     findNavController().navigate(R.id.action_runFragment_to_trackingActivity)
@@ -53,7 +50,16 @@ class RunFragment : Fragment(R.layout.fragment_run) {
                     requestPermission()
                 }
             }
+
+            // 어댑터 연결
+            runAdapter = RunAdapter()
+            runRecyclerView.adapter = runAdapter
+            runRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
+
+        viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+            runAdapter.submitList(it)
+        })
     }
 
     // 권한 요청
