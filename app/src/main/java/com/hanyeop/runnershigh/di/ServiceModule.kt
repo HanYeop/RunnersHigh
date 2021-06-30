@@ -48,7 +48,7 @@ object ServiceModule {
         .setAutoCancel(false)
         .setOngoing(true)
         .setSmallIcon(R.drawable.ic_baseline_directions_run_24)
-        .setContentTitle("Runner's High!")
+        .setContentTitle("달리기 기록을 측정중입니다.")
         .setContentText("00:00:00")
         .setContentIntent(pendingIntent)
 }

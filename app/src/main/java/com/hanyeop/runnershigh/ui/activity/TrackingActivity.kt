@@ -31,6 +31,7 @@ import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.round
 
 @AndroidEntryPoint
@@ -129,7 +130,9 @@ class TrackingActivity : AppCompatActivity() {
         )
     }
 
+    @set:Inject
     var weight = 70f // 임의값
+
     // 달리기 기록 저장
     private fun endRunAndSaveToDB() {
         map?.snapshot { bmp ->
