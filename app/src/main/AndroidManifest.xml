@@ -15,7 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnersHigh">
-        <activity android:name=".ui.activity.TrackingActivity"></activity>
+        <activity android:name=".ui.activity.SetupActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.activity.TrackingActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
@@ -27,15 +31,16 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.TrackingService"
-            android:foregroundServiceType="location"/>
+        <service
+            android:name=".service.TrackingService"
+            android:foregroundServiceType="location" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key"/>
-
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/maps_api_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

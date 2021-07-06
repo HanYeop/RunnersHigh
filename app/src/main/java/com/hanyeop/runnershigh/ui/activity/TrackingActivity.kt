@@ -2,21 +2,18 @@ package com.hanyeop.runnershigh.ui.activity
 
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.material.snackbar.Snackbar
-import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivityTrackingBinding
 import com.hanyeop.runnershigh.model.Run
 import com.hanyeop.runnershigh.service.Polyline
@@ -24,9 +21,11 @@ import com.hanyeop.runnershigh.service.TrackingService
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_PAUSE_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_STOP_SERVICE
+import com.hanyeop.runnershigh.util.Constants.Companion.KEY_WEIGHT
 import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
+import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +49,10 @@ class TrackingActivity : AppCompatActivity() {
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
     private var currentTimeInMillis = 0L
+
+    // SharedPreferences 주입
+    @Inject
+    lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,11 +133,14 @@ class TrackingActivity : AppCompatActivity() {
         )
     }
 
-    @set:Inject
-    var weight = 70f // 임의값
+    // 몸무게
+    var weight = 70f
 
     // 달리기 기록 저장
     private fun endRunAndSaveToDB() {
+        weight = sharedPref.getFloat(KEY_WEIGHT,70f)
+
+        Log.d(TAG, "endRunAndSaveToDB: $weight")
         map?.snapshot { bmp ->
             var distanceInMeters = 0 // 이동거리
             for (polyline in pathPoints) {

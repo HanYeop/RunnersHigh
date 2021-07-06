@@ -1,23 +1,23 @@
 package com.hanyeop.runnershigh.ui.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivityMainBinding
-import com.hanyeop.runnershigh.util.Constants
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_SHOW_TRACKING_ACTIVITY
+import com.hanyeop.runnershigh.util.Constants.Companion.KEY_FIRST_TIME_TOGGLE
+import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -28,12 +28,30 @@ class MainActivity : AppCompatActivity() {
     // NavController 선언
     private lateinit var navController: NavController
 
+    // SharedPreferences 주입
+    @Inject
+    lateinit var sharedPref: SharedPreferences
+
+    // 처음 실행 여부
+    var firstTimeAppOpen: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // 뷰바인딩
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 데이터 불러오기
+        firstTimeAppOpen = sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE, true)
+        Log.d(TAG, "onCreate: $firstTimeAppOpen")
+
+        // 처음 실행했다면 세팅 화면으로
+        if(firstTimeAppOpen){
+            val intent = Intent(this,SetupActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         binding.apply {
             // 툴바 추가
@@ -44,15 +62,6 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentById(R.id.mainContainerView) as NavHostFragment
             navController = navHostFragment.findNavController()
             bottomNavigation.setupWithNavController(navController)
-
-            navController
-                .addOnDestinationChangedListener { _, destination, _ ->
-                    when (destination.id) {
-                        R.id.setupFragment -> bottomNavigation.visibility =
-                            View.GONE
-                        else -> bottomNavigation.visibility = View.VISIBLE
-                    }
-                }
         }
         navigateToTrackingFragmentIfNeeded(intent)
     }
