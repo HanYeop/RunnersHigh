@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/setupFragment">
+    app:startDestination="@id/runFragment">
 
     <action android:id="@+id/action_global_trackingActivity"
         app:destination="@id/trackingActivity"
@@ -33,13 +33,4 @@
         android:name="com.hanyeop.runnershigh.ui.activity.TrackingActivity"
         android:label="activity_tracking"
         tools:layout="@layout/activity_tracking" />
-    <fragment
-        android:id="@+id/setupFragment"
-        android:name="com.hanyeop.runnershigh.ui.fragment.SetupFragment"
-        android:label="fragment_setup"
-        tools:layout="@layout/fragment_setup" >
-        <action
-            android:id="@+id/action_setupFragment_to_runFragment"
-            app:destination="@id/runFragment" />
-    </fragment>
 </navigation>

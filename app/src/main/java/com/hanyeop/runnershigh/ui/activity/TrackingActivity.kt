@@ -2,21 +2,17 @@ package com.hanyeop.runnershigh.ui.activity
 
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.material.snackbar.Snackbar
-import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivityTrackingBinding
 import com.hanyeop.runnershigh.model.Run
 import com.hanyeop.runnershigh.service.Polyline
@@ -27,6 +23,7 @@ import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_STOP_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
+import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -135,6 +132,7 @@ class TrackingActivity : AppCompatActivity() {
 
     // 달리기 기록 저장
     private fun endRunAndSaveToDB() {
+        Log.d(TAG, "endRunAndSaveToDB: $weight")
         map?.snapshot { bmp ->
             var distanceInMeters = 0 // 이동거리
             for (polyline in pathPoints) {

@@ -4,9 +4,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.FragmentSetupBinding
 import com.hanyeop.runnershigh.util.Constants.Companion.KEY_FIRST_TIME_TOGGLE
@@ -48,19 +45,19 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 //                )
 //            }
 
-            okButton.setOnClickListener {
-                val success = writePersonalDataToSharedPref()
-                if (success) {
-                    findNavController().navigate(R.id.action_setupFragment_to_runFragment)
-                } else {
-                    Snackbar.make(
-                        requireView(),
-                        "정보를 전부 입력해주세요.",
-                        Snackbar.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
+//            okButton.setOnClickListener {
+//                val success = writePersonalDataToSharedPref()
+//                if (success) {
+//                    findNavController().navigate(R.id.action_setupFragment_to_runFragment)
+//                } else {
+//                    Snackbar.make(
+//                        requireView(),
+//                        "정보를 전부 입력해주세요.",
+//                        Snackbar.LENGTH_SHORT
+//                    )
+//                        .show()
+//                }
+//            }
         }
     }
 
