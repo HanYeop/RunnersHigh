@@ -3,7 +3,6 @@ package com.hanyeop.runnershigh.ui.activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.hanyeop.runnershigh.databinding.ActivitySetupBinding
@@ -21,21 +20,8 @@ class SetupActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    // 처음 실행 여부
-    @set:Inject
-    var firstTimeAppOpen: Boolean = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d(Constants.TAG, "onCreate2: $firstTimeAppOpen")
-        // 처음 실행일 때
-        if(!firstTimeAppOpen){
-            val intent = Intent(this,MainActivity::class.java)
-            finish()
-            startActivity(intent)
-        }
-
         // 뷰바인딩
         binding = ActivitySetupBinding.inflate(layoutInflater)
         setContentView(binding.root)

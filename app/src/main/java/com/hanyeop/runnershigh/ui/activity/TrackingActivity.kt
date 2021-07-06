@@ -2,6 +2,7 @@ package com.hanyeop.runnershigh.ui.activity
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +21,7 @@ import com.hanyeop.runnershigh.service.TrackingService
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_PAUSE_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_STOP_SERVICE
+import com.hanyeop.runnershigh.util.Constants.Companion.KEY_WEIGHT
 import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
@@ -47,6 +49,10 @@ class TrackingActivity : AppCompatActivity() {
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
     private var currentTimeInMillis = 0L
+
+    // SharedPreferences 주입
+    @Inject
+    lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,11 +133,13 @@ class TrackingActivity : AppCompatActivity() {
         )
     }
 
-    @set:Inject
-    var weight = 70f // 임의값
+    // 몸무게
+    var weight = 70f
 
     // 달리기 기록 저장
     private fun endRunAndSaveToDB() {
+        weight = sharedPref.getFloat(KEY_WEIGHT,70f)
+
         Log.d(TAG, "endRunAndSaveToDB: $weight")
         map?.snapshot { bmp ->
             var distanceInMeters = 0 // 이동거리
