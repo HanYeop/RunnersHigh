@@ -60,7 +60,7 @@ class TrackingActivity : AppCompatActivity() {
         // 뷰바인딩
         binding = ActivityTrackingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         binding.apply {
             mapView.onCreate(savedInstanceState)
             // 맵 불러오기
@@ -68,11 +68,11 @@ class TrackingActivity : AppCompatActivity() {
                 map = it
                 // 알림 클릭 등으로 다시 생성되었을 때 경로 표시
                 addAllPolylines()
-                /**
-                 * 위치 처음에 줌하는거 구현해야함
-                 */
-
+                moveCameraToUser()
             }
+
+            // 알림창에서 불러 왔을 때
+            updateTrackingView(isTracking)
 
             // 스타트 버튼 클릭 시 서비스를 시작함
             startButton.setOnClickListener {
@@ -163,9 +163,27 @@ class TrackingActivity : AppCompatActivity() {
     private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
         binding.apply {
+            if (!isTracking && currentTimeInMillis > 0L) {
+                startButton.text = "다시 시작하기"
+                finishButton.visibility = View.VISIBLE
+            }
+            else if (isTracking) {
+                startButton.text = "정지하기"
+                finishButton.visibility = View.GONE
+            }
+        }
+    }
+
+    /**
+    미구현
+     */
+    // 알림 클릭하여 실행 했을 때 뷰 동기화
+    private fun updateTrackingView(isTracking: Boolean) {
+        this.isTracking = isTracking
+        binding.apply {
             if (!isTracking) {
-            startButton.text = "다시 시작하기"
-            finishButton.visibility = View.VISIBLE
+                startButton.text = "다시 시작하기"
+                finishButton.visibility = View.VISIBLE
             }
             else if (isTracking) {
                 startButton.text = "정지하기"
@@ -188,7 +206,7 @@ class TrackingActivity : AppCompatActivity() {
     // 지도 위치 이동
     private fun moveCameraToUser() {
         if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
-            map?.animateCamera(
+            map?.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
                     pathPoints.last().last(),
                     MAP_ZOOM
@@ -221,7 +239,6 @@ class TrackingActivity : AppCompatActivity() {
 
     // 달리기 종료
     private fun stopRun() {
-        binding.timerText.text = "00:00:00:00"
         sendCommandToService(ACTION_STOP_SERVICE)
         finish()
     }
@@ -255,6 +272,7 @@ class TrackingActivity : AppCompatActivity() {
         binding.mapView.onResume()
         // 백그라운드 상태에서 돌아왔을 때 경로 표시
         addAllPolylines()
+        moveCameraToUser()
         super.onResume()
     }
 
