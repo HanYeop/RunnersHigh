@@ -22,9 +22,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.hanyeop.runnershigh.R
-import com.hanyeop.runnershigh.ui.activity.MainActivity
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_PAUSE_SERVICE
-import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_SHOW_TRACKING_ACTIVITY
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_STOP_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.FASTEST_LOCATION_UPDATE_INTERVAL
@@ -48,7 +46,7 @@ typealias Polylines = MutableList<Polyline>
 @AndroidEntryPoint
 class TrackingService : LifecycleService() {
 
-    // 처음 실행 여부
+    // 처음 실행 여부 (false = 실행되지않음)
     private var isFirstRun = false
     // 서비스 종료 여부
     private var serviceKilled = false
@@ -104,7 +102,7 @@ class TrackingService : LifecycleService() {
     // 서비스가 종료 되었을 때
     private fun killService(){
         serviceKilled = true
-        isFirstRun = true
+        isFirstRun = false
         pauseService()
         postInitialValues()
         stopForeground(true)
