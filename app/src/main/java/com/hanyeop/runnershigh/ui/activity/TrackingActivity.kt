@@ -71,8 +71,10 @@ class TrackingActivity : AppCompatActivity() {
                 moveCameraToUser()
             }
 
-            // 알림창에서 불러 왔을 때
-            updateTrackingView(isTracking)
+            // 알림창에서 불러 왔을 때 현재 레이아웃 불러오기
+            if(TrackingService.isTracking.value != null){
+                updateTrackingView(TrackingService.isTracking.value!!)
+            }
 
             // 스타트 버튼 클릭 시 서비스를 시작함
             startButton.setOnClickListener {
@@ -174,9 +176,6 @@ class TrackingActivity : AppCompatActivity() {
         }
     }
 
-    /**
-    미구현
-     */
     // 알림 클릭하여 실행 했을 때 뷰 동기화
     private fun updateTrackingView(isTracking: Boolean) {
         this.isTracking = isTracking
