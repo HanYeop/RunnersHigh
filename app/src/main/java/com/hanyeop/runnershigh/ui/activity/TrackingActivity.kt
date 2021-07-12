@@ -246,8 +246,6 @@ class TrackingActivity : AppCompatActivity() {
     // 뒤로가기 버튼 눌렀을 때
     override fun onBackPressed() {
         if(currentTimeInMillis > 0L){
-            // 잠시 정지시킴
-            sendCommandToService(ACTION_PAUSE_SERVICE)
             var builder = AlertDialog.Builder(this)
             builder.setTitle("달리기를 취소할까요? 기록은 저장되지 않습니다.")
                 .setPositiveButton("네"){ _,_ ->
@@ -256,7 +254,6 @@ class TrackingActivity : AppCompatActivity() {
                 }
                 .setNegativeButton("아니오"){_,_ ->
                     // 다시 시작
-                    sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
                 }.create()
             builder.show()
         }
