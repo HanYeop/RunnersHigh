@@ -71,8 +71,12 @@ class TrackingActivity : AppCompatActivity() {
                 moveCameraToUser()
             }
 
+            /**
+             * 수정 필요
+             */
             // 알림창에서 불러 왔을 때 현재 레이아웃 불러오기
             if(TrackingService.isTracking.value != null){
+                Log.d(TAG, "onCreate: 호출됨")
                 updateTrackingView(TrackingService.isTracking.value!!)
             }
 
@@ -135,12 +139,10 @@ class TrackingActivity : AppCompatActivity() {
         )
     }
 
-    // 몸무게
-    var weight = 70f
-
     // 달리기 기록 저장
     private fun endRunAndSaveToDB() {
-        weight = sharedPref.getFloat(KEY_WEIGHT,70f)
+        // 몸무게 불러오기
+        val weight = sharedPref.getFloat(KEY_WEIGHT,70f)
 
         Log.d(TAG, "endRunAndSaveToDB: $weight")
         map?.snapshot { bmp ->

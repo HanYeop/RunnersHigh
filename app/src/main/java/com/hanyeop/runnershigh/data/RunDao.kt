@@ -15,6 +15,10 @@ interface RunDao {
     @Delete
     suspend fun deleteRun(run: Run)
 
+    // 모든 기록 삭제
+    @Query("DELETE FROM run_table ")
+    fun deleteAll()
+
     // 날짜 순으로 정렬
     @Query("SELECT * FROM run_table ORDER BY timestamp DESC")
     fun getAllRunsSortedByDate(): LiveData<List<Run>>

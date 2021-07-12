@@ -7,6 +7,7 @@ import com.hanyeop.runnershigh.model.Run
 import com.hanyeop.runnershigh.repository.RunRepository
 import com.hanyeop.runnershigh.util.SortType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +22,10 @@ class RunViewModel @Inject constructor(
 
     fun deleteRun(run : Run) = viewModelScope.launch {
         runRepository.deleteRun(run)
+    }
+
+    fun deleteAllRun() = viewModelScope.launch(Dispatchers.IO) {
+        runRepository.deleteAllRun()
     }
 
     private val runsSortedByDate = runRepository.getAllRunsSortedByDate()
