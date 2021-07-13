@@ -106,5 +106,9 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         imm.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
     }
 
-
+    // 프래그먼트는 뷰보다 오래 지속 . 프래그먼트의 onDestroyView() 메서드에서 결합 클래스 인스턴스 참조를 정리
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
