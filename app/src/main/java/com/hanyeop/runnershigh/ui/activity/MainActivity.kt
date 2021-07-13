@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var sharedPref: SharedPreferences
 
     // 처음 실행 여부
-    var firstTimeAppOpen: Boolean = true
+    private var firstTimeAppOpen: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

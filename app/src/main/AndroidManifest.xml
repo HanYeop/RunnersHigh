@@ -14,16 +14,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RunnersHigh">
-        <activity android:name=".ui.activity.SetupActivity"
-            android:screenOrientation="portrait">
+        android:theme="@style/Theme.RunnersHigh"
+        android:screenOrientation="portrait"
+        android:launchMode="singleTask">
+        <activity android:name=".ui.activity.SetupActivity">
         </activity>
-        <activity android:name=".ui.activity.TrackingActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.TrackingActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
