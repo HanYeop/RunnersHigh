@@ -166,7 +166,7 @@ class TrackingService : LifecycleService() {
                 }
                 delay(TIMER_UPDATE_INTERVAL)
             }
-            // 위치 추적이 종료되었을 때 총시간 저장
+            // 위치 추적이 종료(정지) 되었을 때 총시간 저장
             totalTime += lapTime
         }
     }

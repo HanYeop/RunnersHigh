@@ -29,6 +29,7 @@ import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.round
@@ -109,6 +110,11 @@ class TrackingActivity : AppCompatActivity() {
             pathPoints = it
             addLatestPolyline()
             moveCameraToUser()
+
+            // 거리 텍스트 변경
+            val df = DecimalFormat("###0.000")
+            val distance = df.format(updateDistance()/1000f)
+            binding.distanceText.text = "${distance}Km"
         })
 
         // 시간(타이머) 경과 관찰
@@ -144,12 +150,9 @@ class TrackingActivity : AppCompatActivity() {
         // 몸무게 불러오기
         val weight = sharedPref.getFloat(KEY_WEIGHT,70f)
 
-        Log.d(TAG, "endRunAndSaveToDB: $weight")
         map?.snapshot { bmp ->
-            var distanceInMeters = 0 // 이동거리
-            for (polyline in pathPoints) {
-                distanceInMeters += TrackingUtility.calculatePolylineLength(polyline).toInt()
-            }
+            var distanceInMeters = updateDistance() // 이동거리
+
             // 반올림
             val avgSpeed =
                 round((distanceInMeters / 1000f) / (currentTimeInMillis / 1000f / 60 / 60) * 10) / 10f
@@ -161,6 +164,15 @@ class TrackingActivity : AppCompatActivity() {
             Toast.makeText(this, "달리기 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
             stopRun()
         }
+    }
+
+    // 총 이동거리
+    private fun updateDistance() : Int{
+        var distanceInMeters = 0
+        for (polyline in pathPoints) {
+            distanceInMeters += TrackingUtility.calculatePolylineLength(polyline).toInt()
+        }
+        return distanceInMeters
     }
 
     // 위치 추적 상태에 따른 레이아웃 변경
