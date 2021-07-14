@@ -55,5 +55,12 @@ interface RunDao {
     @Query("SELECT SUM(caloriesBurned) FROM run_table")
     fun getTotalCaloriesBurned(): LiveData<Long>
 
+    // 최장 시간
+    @Query("SELECT MAX(timeInMillis) FROM run_table")
+    fun getMaxTimeInMillis(): LiveData<Long>
+
+    // 최장 거리
+    @Query("SELECT MAX(distanceInMeters) FROM run_table")
+    fun getMaxDistance(): LiveData<Int>
 
 }

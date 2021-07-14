@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.StatisticsFragment"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".ui.fragment.StatisticsFragment">
 
     <TextView
         android:id="@+id/totalTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00:00"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:textSize="32sp"
         android:textColor="@color/gray"
+        android:textSize="32sp"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/totalTimeInfo"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/totalTimeInfo"
@@ -38,14 +38,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0km"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:textStyle="bold"
-        android:textSize="32sp"
         android:textColor="@color/gray"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/totalDistanceInfo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/maxDistanceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0km"
+        android:textColor="@color/gray"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/maxDistanceInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/totalDistanceInfo"
@@ -60,6 +74,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/maxDistanceInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="최장 거리"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/averageSpeedInfo" />
+
+    <TextView
         android:id="@+id/totalCaloriesInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,24 +98,50 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/maxTimeInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최장 시간"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/totalCaloriesText"
+        app:layout_constraintStart_toStartOf="@+id/totalCaloriesText"
+        app:layout_constraintTop_toBottomOf="@+id/totalCaloriesInfo"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
         android:id="@+id/totalCaloriesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0kcal"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:textStyle="bold"
-        android:textSize="32sp"
         android:textColor="@color/gray"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/totalCaloriesInfo"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/maxTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:textColor="@color/gray"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/maxTimeInfo"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/averageSpeedInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="평군 속도"
+        android:text="평균 속도"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="@+id/averageSpeedText"
@@ -102,28 +154,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0km/h"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:textStyle="bold"
-        android:textSize="32sp"
         android:textColor="@color/gray"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/averageSpeedInfo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.83" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="206dp" />
+        app:layout_constraintGuide_begin="205dp" />
 
     <ProgressBar
         android:id="@+id/timeProgressBar"
@@ -144,6 +196,16 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <ProgressBar
+        android:id="@+id/maxDisProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/maxDistanceText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <ProgressBar
         android:id="@+id/calProgressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
@@ -160,5 +222,48 @@
         app:layout_constraintBottom_toTopOf="@+id/averageSpeedInfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <ProgressBar
+        android:id="@+id/maxTimeProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/maxTimeInfo"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/statistics_options"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/totalTimeText"
+        app:layout_constraintStart_toEndOf="@+id/monthText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/monthText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
+        android:text=" 월 : "
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/totalTimeText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/maxTimeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalCaloriesInfo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

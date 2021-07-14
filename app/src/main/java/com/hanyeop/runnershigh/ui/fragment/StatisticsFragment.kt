@@ -76,6 +76,26 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     calProgressBar.isVisible = false
                 }
             }
+
+            // 최장 거리 계산
+            viewModel.maxDistanceInMillis.observe(viewLifecycleOwner) {
+                it?.let {
+                    val maxDistanceString = "${it / 1000f}km"
+                    maxDistanceText.text = maxDistanceString
+                    maxDistanceText.isVisible = true
+                    maxDisProgressBar.isVisible = false
+                }
+            }
+
+            // 최장 시간 계산
+            viewModel.maxTimeInMillis.observe(viewLifecycleOwner) {
+                it?.let {
+                    val maxTimeInMillis = TrackingUtility.getFormattedStopWatchTime(it)
+                    maxTimeText.text = maxTimeInMillis
+                    maxTimeText.isVisible = true
+                    maxTimeProgressBar.isVisible = false
+                }
+            }
         }
     }
 

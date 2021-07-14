@@ -14,6 +14,6 @@ class StatisticsViewModel @Inject constructor(
     var totalTimeInMillis = runRepository.getTotalTimeInMillis()
     var totalAvgSpeed = runRepository.getTotalAvgSpeed()
     var totalCaloriesBurned = runRepository.getTotalCaloriesBurned()
-
-    var runsSortedByDate = runRepository.getAllRunsSortedByDate()
+    var maxTimeInMillis = runRepository.getMaxTimeInMillis()
+    var maxDistanceInMillis = runRepository.getMaxDistanceInMillis()
 }
