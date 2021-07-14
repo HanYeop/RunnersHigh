@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="시간"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/timerText"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="00:00:00:00"
             android:textColor="@color/gray"
-            android:textSize="32sp" />
+            android:textSize="28sp" />
     </LinearLayout>
 
     <com.google.android.gms.maps.MapView
@@ -40,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="5dp"/>
 
     <Button
         android:id="@+id/startButton"
@@ -85,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="거리"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/distanceText"
@@ -93,7 +94,7 @@
             android:layout_height="wrap_content"
             android:text="0.000Km"
             android:textColor="@color/gray"
-            android:textSize="32sp" />
+            android:textSize="28sp" />
 
     </LinearLayout>
 

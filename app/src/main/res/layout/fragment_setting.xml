@@ -65,6 +65,7 @@
         android:id="@+id/allDeleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_baseline_delete_24"
         android:text="기록 전부 삭제하기"
         android:textColor="@color/black"
         android:textSize="16sp"
