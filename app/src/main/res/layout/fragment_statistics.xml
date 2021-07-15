@@ -238,9 +238,10 @@
         android:layout_height="wrap_content"
         android:entries="@array/statistics_options"
         android:spinnerMode="dialog"
-        app:layout_constraintBottom_toTopOf="@+id/totalTimeText"
+        app:layout_constraintBottom_toBottomOf="@+id/totalTimeText"
         app:layout_constraintStart_toEndOf="@+id/monthText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/monthText"
@@ -251,9 +252,10 @@
         android:text=" 월 : "
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/totalTimeText"
+        app:layout_constraintBottom_toBottomOf="@+id/totalTimeText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <View
         android:id="@+id/view"

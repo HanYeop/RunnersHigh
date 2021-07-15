@@ -10,7 +10,7 @@
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="100dp"
         android:text="이름과 몸무게를\n 작성해주세요 !"
         android:textAlignment="center"
         android:textSize="36sp"
