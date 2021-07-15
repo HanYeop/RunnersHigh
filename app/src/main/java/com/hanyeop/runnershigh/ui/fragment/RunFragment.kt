@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.adapter.RunAdapter
 import com.hanyeop.runnershigh.databinding.FragmentRunBinding
@@ -77,6 +80,9 @@ class RunFragment : Fragment(R.layout.fragment_run) {
             runAdapter = RunAdapter(viewModel)
             runRecyclerView.adapter = runAdapter
             runRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            // 삭제 리스너 연결
+            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(runRecyclerView)
+
         }
 
         // 목록 관찰하여 변경시 목록 변경
@@ -109,6 +115,31 @@ class RunFragment : Fragment(R.layout.fragment_run) {
                         android.Manifest.permission.ACCESS_COARSE_LOCATION,
                         android.Manifest.permission.ACCESS_FINE_LOCATION
                     ), 1)
+            }
+        }
+    }
+
+    // 기록 스와이프하여 삭제
+    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.layoutPosition
+            val run = runAdapter.differ.currentList[position]
+            viewModel.deleteRun(run)
+            Snackbar.make(requireView(), "기록을 삭제했습니다.", Snackbar.LENGTH_LONG).apply {
+                setAction("되돌리기") {
+                    viewModel.insertRun(run)
+                }
+                show()
             }
         }
     }

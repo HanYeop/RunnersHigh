@@ -46,7 +46,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 builder.setTitle("정말 모든 기록을 삭제할까요? 삭제한 기록은 복구되지 않습니다.")
                     .setPositiveButton("네"){ _,_ ->
                         viewModel.deleteAllRun()
-                        Snackbar.make(view,"삭제 되었습니다.",Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(view,"기록이 전부 삭제 되었습니다.",Snackbar.LENGTH_SHORT).show()
                     }
                     .setNegativeButton("아니오"){_,_ ->
                         null
