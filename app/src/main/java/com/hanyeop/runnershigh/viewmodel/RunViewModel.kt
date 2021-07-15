@@ -28,6 +28,10 @@ class RunViewModel @Inject constructor(
         runRepository.deleteAllRun()
     }
 
+    fun updateRun(run : Run) = viewModelScope.launch(Dispatchers.IO) {
+        runRepository.updateRun(run)
+    }
+
     private val runsSortedByDate = runRepository.getAllRunsSortedByDate()
     private val runsSortedByTimeInMillis = runRepository.getAllRunsSortedByTimeInMillis()
     private val runsSortedByDistance = runRepository.getAllRunsSortedByDistance()

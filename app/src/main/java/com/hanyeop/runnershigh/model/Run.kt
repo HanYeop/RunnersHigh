@@ -6,13 +6,16 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "run_table")
 data class Run(
+    @PrimaryKey(autoGenerate = true)
+    var id : Int = 0,
     var image: Bitmap? = null,
     var timestamp: Long = 0L,
     var avgSpeedInKMH: Float = 0f,
     var distanceInMeters: Float = 0f,
     var timeInMillis: Long = 0,
-    var caloriesBurned: Int = 0
-) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
-}
+    var caloriesBurned: Int = 0,
+    var title : String = "",
+    var year : Int = 0,
+    var month : Int = 0,
+    var day : Int = 0
+)

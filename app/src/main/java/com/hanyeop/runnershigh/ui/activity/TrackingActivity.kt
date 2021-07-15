@@ -30,6 +30,7 @@ import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.round
@@ -151,14 +152,27 @@ class TrackingActivity : AppCompatActivity() {
         // 몸무게 불러오기
         val weight = sharedPref.getFloat(KEY_WEIGHT,70f)
 
+        /**
+         * 날짜 변환
+         */
+        val calendar = Calendar.getInstance()
+        val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+        val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
+        val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
+
+        val year = yearFormat.format(calendar.time)
+        val month = monthFormat.format(calendar.time)
+        val day = dayFormat.format(calendar.time)
+        val title = "${year}년 ${month}월 ${day}일 러닝"
+
         map?.snapshot { bmp ->
             // 반올림
             val avgSpeed =
                 round((sumDistance / 1000f) / (currentTimeInMillis / 1000f / 60 / 60) * 10) / 10f
-            val timestamp = Calendar.getInstance().timeInMillis
+            val timestamp = calendar.timeInMillis
             val caloriesBurned = ((sumDistance / 1000f) * weight).toInt()
-            val run =
-                Run(bmp, timestamp, avgSpeed, sumDistance, currentTimeInMillis, caloriesBurned)
+            val run = Run(0,bmp,timestamp,avgSpeed,sumDistance,currentTimeInMillis,
+                caloriesBurned,title,year.toInt(),month.toInt(),day.toInt() )
             viewModel.insertRun(run)
             Toast.makeText(this, "달리기 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
             stopRun()

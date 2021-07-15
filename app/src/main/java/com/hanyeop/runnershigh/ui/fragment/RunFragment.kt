@@ -8,11 +8,11 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.hanyeop.runnershigh.R
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.adapter.RunAdapter
 import com.hanyeop.runnershigh.databinding.FragmentRunBinding
 import com.hanyeop.runnershigh.util.SortType
@@ -74,7 +74,7 @@ class RunFragment : Fragment(R.layout.fragment_run) {
             }
 
             // 어댑터 연결
-            runAdapter = RunAdapter()
+            runAdapter = RunAdapter(viewModel)
             runRecyclerView.adapter = runAdapter
             runRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }

@@ -15,6 +15,10 @@ interface RunDao {
     @Delete
     suspend fun deleteRun(run: Run)
 
+    // 기록 변경
+    @Update
+    suspend fun updateRun(run: Run)
+
     // 모든 기록 삭제
     @Query("DELETE FROM run_table ")
     fun deleteAll()
