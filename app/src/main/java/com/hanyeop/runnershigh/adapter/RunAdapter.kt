@@ -30,10 +30,11 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
                 val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
                 val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
 
+                // 정보 표시
                 titleText.text = "${yearFormat.format(calendar.time)}년 ${monthFormat.format(calendar.time)}월 " +
                         "${dayFormat.format(calendar.time)}일 러닝"
                 avgSpeedText.text = "${run.avgSpeedInKMH}km/h"
-                distanceText.text = "${run.distanceInMeters / 1000f}km"
+                distanceText.text = "${TrackingUtility.getFormattedDistance(run.distanceInMeters)}km"
                 timeText.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
                 caloriesText.text = "${run.caloriesBurned}kcal"
                 dateText.text = "${yearFormat.format(calendar.time)}/${monthFormat.format(calendar.time)}/" +

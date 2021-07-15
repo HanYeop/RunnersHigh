@@ -37,9 +37,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             // 총 거리 계산
             viewModel.totalDistance.observe(viewLifecycleOwner) {
                 it?.let {
-                    val km = it / 1000f
-                    val totalDistance = round(km * 10) / 10f
-                    val totalDistanceString = "${totalDistance}km"
+                    val totalDistanceString = "${TrackingUtility.getFormattedDistance(it)}km"
                     totalDistanceText.text = totalDistanceString
                     totalDistanceText.isVisible = true
                     disProgressBar.isVisible = false
@@ -80,7 +78,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             // 최장 거리 계산
             viewModel.maxDistanceInMillis.observe(viewLifecycleOwner) {
                 it?.let {
-                    val maxDistanceString = "${it / 1000f}km"
+                    val maxDistanceString = "${TrackingUtility.getFormattedDistance(it)}km"
                     maxDistanceText.text = maxDistanceString
                     maxDistanceText.isVisible = true
                     maxDisProgressBar.isVisible = false

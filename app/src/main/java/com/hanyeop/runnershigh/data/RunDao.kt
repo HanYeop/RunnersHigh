@@ -45,7 +45,7 @@ interface RunDao {
 
     // 거리 합계
     @Query("SELECT SUM(distanceInMeters) FROM run_table")
-    fun getTotalDistance(): LiveData<Int>
+    fun getTotalDistance(): LiveData<Float>
 
     // 평균 속도
     @Query("SELECT AVG(avgSpeedInKMH) FROM run_table")
@@ -61,6 +61,6 @@ interface RunDao {
 
     // 최장 거리
     @Query("SELECT MAX(distanceInMeters) FROM run_table")
-    fun getMaxDistance(): LiveData<Int>
+    fun getMaxDistance(): LiveData<Float>
 
 }

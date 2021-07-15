@@ -3,6 +3,7 @@ package com.hanyeop.runnershigh.ui.activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -29,7 +30,6 @@ import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.round
@@ -54,6 +54,9 @@ class TrackingActivity : AppCompatActivity() {
     // SharedPreferences 주입
     @Inject
     lateinit var sharedPref: SharedPreferences
+
+    // 총 이동거리
+    private var sumDistance = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,9 +115,7 @@ class TrackingActivity : AppCompatActivity() {
             moveCameraToUser()
 
             // 거리 텍스트 변경
-            val df = DecimalFormat("###0.000")
-            val distance = df.format(updateDistance()/1000f)
-            binding.distanceText.text = "${distance}Km"
+            binding.distanceText.text = "${TrackingUtility.getFormattedDistance(sumDistance)}Km"
         })
 
         // 시간(타이머) 경과 관찰
@@ -151,28 +152,17 @@ class TrackingActivity : AppCompatActivity() {
         val weight = sharedPref.getFloat(KEY_WEIGHT,70f)
 
         map?.snapshot { bmp ->
-            var distanceInMeters = updateDistance() // 이동거리
-
             // 반올림
             val avgSpeed =
-                round((distanceInMeters / 1000f) / (currentTimeInMillis / 1000f / 60 / 60) * 10) / 10f
+                round((sumDistance / 1000f) / (currentTimeInMillis / 1000f / 60 / 60) * 10) / 10f
             val timestamp = Calendar.getInstance().timeInMillis
-            val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
+            val caloriesBurned = ((sumDistance / 1000f) * weight).toInt()
             val run =
-                Run(bmp, timestamp, avgSpeed, distanceInMeters, currentTimeInMillis, caloriesBurned)
+                Run(bmp, timestamp, avgSpeed, sumDistance, currentTimeInMillis, caloriesBurned)
             viewModel.insertRun(run)
             Toast.makeText(this, "달리기 기록이 저장되었습니다.", Toast.LENGTH_SHORT).show()
             stopRun()
         }
-    }
-
-    // 총 이동거리
-    private fun updateDistance() : Int{
-        var distanceInMeters = 0
-        for (polyline in pathPoints) {
-            distanceInMeters += TrackingUtility.calculatePolylineLength(polyline).toInt()
-        }
-        return distanceInMeters
     }
 
     // 위치 추적 상태에 따른 레이아웃 변경
@@ -240,6 +230,17 @@ class TrackingActivity : AppCompatActivity() {
                 .add(lastLatLng)
 
             map?.addPolyline(polylineOptions)
+
+            // 이동거리 계산
+            val result = FloatArray(1)
+            Location.distanceBetween(
+                preLastLatLng.latitude,
+                preLastLatLng.longitude,
+                lastLatLng.latitude,
+                lastLatLng.longitude,
+                result
+            )
+            sumDistance += result[0]
         }
     }
 

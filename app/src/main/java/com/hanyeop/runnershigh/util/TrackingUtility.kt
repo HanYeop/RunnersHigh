@@ -2,10 +2,9 @@ package com.hanyeop.runnershigh.util
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import androidx.core.content.ContextCompat
-import com.hanyeop.runnershigh.service.Polyline
+import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit
 
 class TrackingUtility {
@@ -46,24 +45,10 @@ class TrackingUtility {
                     "${if (milliseconds < 10) "0" else ""}$milliseconds"
         }
 
-        // 거리 계산
-        fun calculatePolylineLength(polyline: Polyline): Float {
-            var distance = 0f
-            // 두 경로 사이마다 거리를 계산하여 합함
-            for (i in 0 until polyline.size - 1) {
-                val pos1 = polyline[i]
-                val pos2 = polyline[i + 1]
-                val result = FloatArray(1)
-                Location.distanceBetween(
-                    pos1.latitude,
-                    pos1.longitude,
-                    pos2.latitude,
-                    pos2.longitude,
-                    result
-                )
-                distance += result[0]
-            }
-            return distance
+        // 거리 표시 형식
+        fun getFormattedDistance(dis: Float): String {
+            val df = DecimalFormat("###0.000")
+            return df.format((dis / 1000f))
         }
     }
 }
