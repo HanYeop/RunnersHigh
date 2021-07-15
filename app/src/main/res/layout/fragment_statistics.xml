@@ -104,8 +104,8 @@
         android:text="최장 시간"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="@+id/totalCaloriesText"
-        app:layout_constraintStart_toStartOf="@+id/totalCaloriesText"
+        app:layout_constraintEnd_toEndOf="@+id/totalCaloriesInfo"
+        app:layout_constraintStart_toStartOf="@+id/totalCaloriesInfo"
         app:layout_constraintTop_toBottomOf="@+id/totalCaloriesInfo"
         app:layout_constraintVertical_bias="0.5" />
 
@@ -267,5 +267,18 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/totalCaloriesInfo" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="nice.json"
+        app:lottie_loop="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

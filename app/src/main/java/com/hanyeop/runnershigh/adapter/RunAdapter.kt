@@ -39,6 +39,12 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
                 caloriesText.text = "${run.caloriesBurned}kcal"
                 dateText.text = "${yearFormat.format(calendar.time)}/${monthFormat.format(calendar.time)}/" +
                         "${dayFormat.format(calendar.time)}"
+
+                // 아이템 클릭 시
+                itemLayout.setOnClickListener {
+
+                }
+
             }
         }
     }
@@ -79,5 +85,9 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
                 return oldItem.hashCode() == newItem.hashCode()
             }
         }
+    }
+
+    fun onItemClick(){
+
     }
 }

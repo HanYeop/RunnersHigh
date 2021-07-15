@@ -21,11 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:clickable="true"
-        app:maxImageSize="40dp"
         android:src="@drawable/ic_baseline_directions_run_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="40dp" />
 
     <Spinner
         android:id="@+id/sortSpinner"
@@ -46,4 +46,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/sortSpinner"
         app:layout_constraintEnd_toStartOf="@+id/sortSpinner"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
