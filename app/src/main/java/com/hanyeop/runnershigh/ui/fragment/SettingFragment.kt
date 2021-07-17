@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
@@ -66,7 +67,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                     Snackbar.make(view,"다시 입력해주세요.",Snackbar.LENGTH_SHORT).show()
                 }
             }
-
         }
     }
 
@@ -80,7 +80,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         }
     }
 
-    // 키, 몸무게 수정 기능
+    // 이름, 몸무게 수정 기능
     private fun changingInformation() : Boolean{
         binding.apply {
             val name = nameText.text.toString()
@@ -91,11 +91,14 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 return false
             }
 
-            // 키, 몸무게 수정
+            // 이름, 몸무게 수정
             sharedPref.edit()
                 .putString(Constants.KEY_NAME, name)
                 .putFloat(Constants.KEY_WEIGHT, weight.toFloat())
                 .apply()
+
+            val toolbarTitle : TextView= requireActivity().findViewById(R.id.toolbarTitle)
+            toolbarTitle.text = "${name}님, 안녕하세요!"
             return true
         }
     }

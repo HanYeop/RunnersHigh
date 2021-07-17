@@ -20,7 +20,7 @@ class RunAdapter(private val runViewModel: RunViewModel) : RecyclerView.Adapter<
 
     inner class RunViewHolder(private val binding : ItemRunBinding)
         : RecyclerView.ViewHolder(binding.root), UpdateDialogInterface{
-        lateinit var currentRun : Run
+        private lateinit var currentRun : Run
 
         // 현재 아이템에 맞는 데이터 연결
         fun bind(run : Run){

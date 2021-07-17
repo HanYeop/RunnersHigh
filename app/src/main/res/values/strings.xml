@@ -7,4 +7,17 @@
         <item>평균 속도</item>
         <item>칼로리 소모량</item>
     </string-array>
+
+    <string-array name="title_string">
+        <item>안녕하세요!</item>
+        <item>오늘도 파이팅해봐요!</item>
+        <item>오늘 컨디션은 어때요?</item>
+        <item>진짜 멋져요!</item>
+        <item>열심히 달려봐요!</item>
+        <item>분명 좋은 결과가 있을거에요.</item>
+        <item>가끔은 쉬어도 괜찮아요.</item>
+        <item>뛰고 나면 기분이 좋아질거에요!</item>
+        <item>다치지 않게 조심하세요.</item>
+        <item>좋은 하루 보내세요!</item>
+    </string-array>
 </resources>

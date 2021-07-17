@@ -16,9 +16,12 @@ import com.hanyeop.runnershigh.databinding.ActivityMainBinding
 import com.hanyeop.runnershigh.service.TrackingService
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_SHOW_TRACKING_ACTIVITY
 import com.hanyeop.runnershigh.util.Constants.Companion.KEY_FIRST_TIME_TOGGLE
+import com.hanyeop.runnershigh.util.Constants.Companion.KEY_NAME
 import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -46,6 +49,10 @@ class MainActivity : AppCompatActivity() {
         // 데이터 불러오기
         firstTimeAppOpen = sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE, true)
         Log.d(TAG, "onCreate: $firstTimeAppOpen")
+        val name = sharedPref.getString(KEY_NAME,"")
+
+        var randomStringInt = Random().nextInt(10)
+        val array = resources.getStringArray(R.array.title_string)
 
         // 처음 실행했다면 세팅 화면으로
         if(firstTimeAppOpen){
@@ -63,6 +70,8 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentById(R.id.mainContainerView) as NavHostFragment
             navController = navHostFragment.findNavController()
             bottomNavigation.setupWithNavController(navController)
+
+            toolbarTitle.text = "${name}님, ${array[randomStringInt]}"
         }
 
         // 트래킹이 종료되지 않았을 때, 백그라운드에서 제거 후 실행해도 바로 트래킹 화면이 뜨게함
