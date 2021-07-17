@@ -97,6 +97,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 .putFloat(Constants.KEY_WEIGHT, weight.toFloat())
                 .apply()
 
+            // 툴바 텍스트 랜덤 변경
             val toolbarTitle : TextView= requireActivity().findViewById(R.id.toolbarTitle)
             toolbarTitle.text = "${name}님, 안녕하세요!"
             return true

@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: $firstTimeAppOpen")
         val name = sharedPref.getString(KEY_NAME,"")
 
+        // 툴바 텍스트 랜덤 변경
         var randomStringInt = Random().nextInt(10)
         val array = resources.getStringArray(R.array.title_string)
 
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
             navController = navHostFragment.findNavController()
             bottomNavigation.setupWithNavController(navController)
 
+            // 툴바 텍스트 랜덤 변경
             toolbarTitle.text = "${name}님, ${array[randomStringInt]}"
         }
 
