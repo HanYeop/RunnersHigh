@@ -78,12 +78,10 @@ class TrackingActivity : AppCompatActivity() {
                 binding.distanceText.text = "${TrackingUtility.getFormattedDistance(sumDistance)}Km"
             }
 
-            /**
-             * 수정 필요
-             */
             // 알림창에서 불러 왔을 때 현재 레이아웃 불러오기
             if(TrackingService.isTracking.value != null){
-                updateTrackingView(TrackingService.isTracking.value!!)
+                currentTimeInMillis = TrackingService.timeRunInMillis.value!!
+                updateTracking(TrackingService.isTracking.value!!)
             }
 
             // 스타트 버튼 클릭 시 서비스를 시작함
@@ -185,21 +183,6 @@ class TrackingActivity : AppCompatActivity() {
         this.isTracking = isTracking
         binding.apply {
             if (!isTracking && currentTimeInMillis > 0L) {
-                startButton.text = "다시 시작하기"
-                finishButton.visibility = View.VISIBLE
-            }
-            else if (isTracking) {
-                startButton.text = "정지하기"
-                finishButton.visibility = View.GONE
-            }
-        }
-    }
-
-    // 알림 클릭하여 실행 했을 때 뷰 동기화
-    private fun updateTrackingView(isTracking: Boolean) {
-        this.isTracking = isTracking
-        binding.apply {
-            if (!isTracking) {
                 startButton.text = "다시 시작하기"
                 finishButton.visibility = View.VISIBLE
             }
