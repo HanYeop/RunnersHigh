@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivityMainBinding
+import com.hanyeop.runnershigh.service.TrackingService
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_SHOW_TRACKING_ACTIVITY
 import com.hanyeop.runnershigh.util.Constants.Companion.KEY_FIRST_TIME_TOGGLE
 import com.hanyeop.runnershigh.util.Constants.Companion.TAG
@@ -63,7 +64,14 @@ class MainActivity : AppCompatActivity() {
             navController = navHostFragment.findNavController()
             bottomNavigation.setupWithNavController(navController)
         }
-        navigateToTrackingFragmentIfNeeded(intent)
+
+        // 트래킹이 종료되지 않았을 때, 백그라운드에서 제거 후 실행해도 바로 트래킹 화면이 뜨게함
+        if(TrackingService.isFirstRun){
+            val intent = Intent(this, MainActivity::class.java).also {
+                it.action = ACTION_SHOW_TRACKING_ACTIVITY
+            }
+            navigateToTrackingFragmentIfNeeded(intent)
+        }
     }
 
     // 권한 요청 결과 처리

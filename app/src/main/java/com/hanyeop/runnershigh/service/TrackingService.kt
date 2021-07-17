@@ -46,8 +46,6 @@ typealias Polylines = MutableList<Polyline>
 @AndroidEntryPoint
 class TrackingService : LifecycleService() {
 
-    // 처음 실행 여부 (false = 실행되지않음)
-    private var isFirstRun = false
     // 서비스 종료 여부
     private var serviceKilled = false
 
@@ -76,6 +74,7 @@ class TrackingService : LifecycleService() {
         val isTracking = MutableLiveData<Boolean>() // 위치 추적 상태 여부
         val pathPoints = MutableLiveData<Polylines>() // LatLng = 위도,경도
         val timeRunInMillis = MutableLiveData<Long>() // 뷰에 표시될 시간
+        var isFirstRun = false // 처음 실행 여부 (false = 실행되지않음)
     }
 
     // 초기화
@@ -90,7 +89,6 @@ class TrackingService : LifecycleService() {
         super.onCreate()
         currentNotificationBuilder = baseNotificationBuilder
         postInitialValues()
-//        fusedLocationProviderClient = FusedLocationProviderClient(this)
 
         // 위치 추적 상태가 되면 업데이트 호출
         isTracking.observe(this, Observer {
