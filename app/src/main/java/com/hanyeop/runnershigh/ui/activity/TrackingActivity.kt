@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -26,7 +25,6 @@ import com.hanyeop.runnershigh.util.Constants.Companion.KEY_WEIGHT
 import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
-import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +63,7 @@ class TrackingActivity : AppCompatActivity() {
         // 뷰바인딩
         binding = ActivityTrackingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         binding.apply {
             mapView.onCreate(savedInstanceState)
             // 맵 불러오기
@@ -74,6 +72,10 @@ class TrackingActivity : AppCompatActivity() {
                 // 알림 클릭 등으로 다시 생성되었을 때 경로 표시
                 addAllPolylines()
                 moveCameraToUser()
+
+                // 거리 텍스트 변경 ( 알림 클릭 등으로 다시 생성되었을 때 초기화 방지)
+                sumDistance = updateDistance()
+                binding.distanceText.text = "${TrackingUtility.getFormattedDistance(sumDistance)}Km"
             }
 
             /**
@@ -81,7 +83,6 @@ class TrackingActivity : AppCompatActivity() {
              */
             // 알림창에서 불러 왔을 때 현재 레이아웃 불러오기
             if(TrackingService.isTracking.value != null){
-                Log.d(TAG, "onCreate: 호출됨")
                 updateTrackingView(TrackingService.isTracking.value!!)
             }
 
@@ -232,6 +233,35 @@ class TrackingActivity : AppCompatActivity() {
         }
     }
 
+    // 총 이동거리
+    private fun updateDistance() : Float{
+        var distanceInMeters = 0f
+        for (polyline in pathPoints) {
+            distanceInMeters += calculatePolylineLength(polyline)
+        }
+        return distanceInMeters
+    }
+
+    // 총 이동거리 계산
+    private fun calculatePolylineLength(polyline: Polyline): Float {
+        var distance = 0f
+        // 두 경로 사이마다 거리를 계산하여 합함
+        for (i in 0 until polyline.size - 1) {
+            val pos1 = polyline[i]
+            val pos2 = polyline[i + 1]
+            val result = FloatArray(1)
+            Location.distanceBetween(
+                pos1.latitude,
+                pos1.longitude,
+                pos2.latitude,
+                pos2.longitude,
+                result
+            )
+            distance += result[0]
+        }
+        return distance
+    }
+
     // 경로 표시 (마지막 전, 마지막 경로 연결)
     private fun addLatestPolyline(){
         if(pathPoints.isNotEmpty() && pathPoints.last().size > 1){
@@ -298,6 +328,9 @@ class TrackingActivity : AppCompatActivity() {
         // 백그라운드 상태에서 돌아왔을 때 경로 표시
         addAllPolylines()
         moveCameraToUser()
+
+        // 거리 텍스트 동기화
+        binding.distanceText.text = "${TrackingUtility.getFormattedDistance(sumDistance)}Km"
         super.onResume()
     }
 

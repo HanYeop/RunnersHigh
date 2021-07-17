@@ -105,4 +105,9 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.trackingActivity)
         }
     }
+
+    // 백버튼 클릭 시 종료
+    override fun onBackPressed() {
+        finish()
+    }
 }
