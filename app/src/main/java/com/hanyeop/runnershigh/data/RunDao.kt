@@ -67,4 +67,8 @@ interface RunDao {
     @Query("SELECT MAX(distanceInMeters) FROM run_table")
     fun getMaxDistance(): LiveData<Float>
 
+    // 달리기 횟수
+    @Query("SELECT COUNT(*) FROM run_table")
+    fun getTotalRunning(): LiveData<Int>
+
 }

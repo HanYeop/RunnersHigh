@@ -94,6 +94,12 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     maxTimeProgressBar.isVisible = false
                 }
             }
+            
+            viewModel.totalRunning.observe(viewLifecycleOwner){
+                it?.let {
+                    numberOfTimesText.text = "횟수 : $it 회"
+                }
+            }
         }
     }
 

@@ -232,24 +232,12 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/statistics_options"
-        android:spinnerMode="dialog"
-        app:layout_constraintBottom_toBottomOf="@+id/totalTimeText"
-        app:layout_constraintStart_toEndOf="@+id/monthText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
     <TextView
-        android:id="@+id/monthText"
+        android:id="@+id/numberOfTimesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
-        android:text=" 월 : "
+        android:text=" 횟수 : "
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/totalTimeText"
