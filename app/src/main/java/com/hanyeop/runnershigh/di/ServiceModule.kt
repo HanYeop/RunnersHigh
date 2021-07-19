@@ -34,9 +34,11 @@ object ServiceModule {
     ) = PendingIntent.getActivity(
         context,0,
         Intent(context, MainActivity::class.java).also {
-            it.action = Constants.ACTION_SHOW_TRACKING_ACTIVITY
+            it.action = Intent.ACTION_MAIN
+            it.addCategory(Intent.CATEGORY_LAUNCHER)
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }, PendingIntent.FLAG_UPDATE_CURRENT
-    )
+    )!!
 
     // NotificationCompat.Builder 추가
     @ServiceScoped
