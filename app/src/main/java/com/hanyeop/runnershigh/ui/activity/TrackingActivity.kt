@@ -313,6 +313,7 @@ class TrackingActivity : AppCompatActivity() {
         moveCameraToUser()
 
         // 거리 텍스트 동기화
+        sumDistance = updateDistance()
         binding.distanceText.text = "${TrackingUtility.getFormattedDistance(sumDistance)}Km"
         super.onResume()
     }

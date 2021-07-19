@@ -43,6 +43,10 @@ interface RunDao {
     @Query("SELECT * FROM run_table ORDER BY caloriesBurned DESC")
     fun getAllRunsSortedByCaloriesBurned(): LiveData<List<Run>>
 
+    // 월로 조회
+    @Query("SELECT * FROM run_table WHERE year = :year AND month = :month ORDER BY timestamp DESC")
+    fun getMonthRunsSortedByDate(year : Int, month : Int): LiveData<List<Run>>
+
     // 시간 합계
     @Query("SELECT SUM(timeInMillis) FROM run_table")
     fun getTotalTimeInMillis(): LiveData<Long>
