@@ -38,8 +38,10 @@ class RunAdapter(private val runViewModel: RunViewModel) : RecyclerView.Adapter<
                 // 아이템 클릭 시 이름 변경 다이얼로그
                 itemLayout.setOnClickListener {
                     currentRun = run
-                    val myCustomDialog = UpdateDialog(binding.itemLayout.context,this@RunViewHolder,run.title)
-                    myCustomDialog.show()
+                    val myCustomDialog = run.image?.let { image ->
+                        UpdateDialog(binding.itemLayout.context,this@RunViewHolder,run.title, image)
+                    }
+                    myCustomDialog?.show()
                 }
             }
         }
