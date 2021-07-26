@@ -37,7 +37,6 @@ class RunViewModel @Inject constructor(
     private val runsSortedByDistance = runRepository.getAllRunsSortedByDistance()
     private val runsSortedByAvgSpeed = runRepository.getAllRunsSortedByAvgSpeed()
     private val runsSortedByCaloriesBurned = runRepository.getAllRunsSortedByCaloriesBurned()
-    private fun monthRunsSortedByDate(year :Int, month:Int) = runRepository.getMonthRunsSortedByDate(year,month)
 
     // 라이브데이터 묶어줌 (단일 옵저버에 추가 가능)
     val runs = MediatorLiveData<List<Run>>()
