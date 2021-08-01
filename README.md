@@ -75,7 +75,9 @@ API 사용하려면 별도의 개인 API를 사용해야 함
 
 ![image](https://user-images.githubusercontent.com/50766393/127773258-3f090ff7-a5d3-4483-b611-69553e6e7ad0.png)
 
-어플리케이션이 백그라운드에서 
+어플리케이션이 백그라운드에서 계속 작동함.
+
+
 
 
 
