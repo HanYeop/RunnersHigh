@@ -45,37 +45,37 @@ API 사용하려면 별도의 개인 API를 사용해야 함
 ## 초기 실행화면
 ![image](https://user-images.githubusercontent.com/50766393/127773128-3d35e46f-3dc7-46d5-bb47-9259185134ec.png)
 
-사용자의 정보를 입력받음. 
+사용자의 정보를 입력받습니다.
 
 ## 달리기 화면
 
 ![image](https://user-images.githubusercontent.com/50766393/127773171-ac49cc8e-711e-4061-8909-a464db35a3ed.png)
 
-달리기 기록을 확인, 삭제, 수정할 수 있으며 정렬 가능
+달리기 기록을 확인, 삭제, 수정할 수 있으며 정렬이 가능합니다.
 
 ## 통계 화면
 
 ![image](https://user-images.githubusercontent.com/50766393/127773197-b49ee373-2b35-4d05-ace0-8e31e26712b2.png)
 
-통계 확인 가능
+통계를 확인할 수 있습니다.
 
 ## 설정 화면
 
 ![image](https://user-images.githubusercontent.com/50766393/127773218-1ad593a7-3777-4e54-abf1-b50fcad15a0e.png)
 
-초기 설정 수정 가능
+초기 설정을 수정할 수 있습니다.
 
 ## 추적 화면
 
 ![image](https://user-images.githubusercontent.com/50766393/127773236-c29d0cc7-0469-42f7-9790-3d472bf685aa.png)
 
-달리기 경로, 시간, 거리가 실시간으로 표시됨
+달리기 경로, 시간, 거리가 실시간으로 표시됩니다.
 
 ## 서비스 화면
 
 ![image](https://user-images.githubusercontent.com/50766393/127773258-3f090ff7-a5d3-4483-b611-69553e6e7ad0.png)
 
-어플리케이션이 백그라운드에서 계속 작동함.
+어플리케이션이 백그라운드에서 계속 작동합니다.
 
 
 
