@@ -8,7 +8,8 @@ API 사용하려면 별도의 개인 API를 사용해야 함
 
 ![image](https://user-images.githubusercontent.com/50766393/127772896-294acd3d-42dc-479c-8761-14c27a63e7f2.png)
 
-[APK 다운로드](https://github.com/HanYeop/RunnersHigh/files/6912758/RunnersHigh.zip)
+[APK 다운로드](https://github.com/HanYeop/RunnersHigh/files/7121790/RunnersHigh.zip)
+
 
 ## 사용한 라이브러리
 * Android Architecture Components
