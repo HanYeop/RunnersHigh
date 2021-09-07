@@ -15,14 +15,16 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunnersHigh"
-        android:screenOrientation="portrait"
         android:launchMode="singleTask">
-        <activity android:name=".ui.activity.SetupActivity">
+        <activity android:name=".ui.activity.SetupActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.activity.TrackingActivity" />
+        <activity android:name=".ui.activity.TrackingActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.MainActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
