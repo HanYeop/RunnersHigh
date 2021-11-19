@@ -4,7 +4,7 @@
 
 ![api](https://user-images.githubusercontent.com/50766393/127772947-fd9020f3-7781-4d00-baba-f3f0d655b7c2.png)
 
-API 사용하려면 별도의 개인 API를 사용해야 함
+코드에서 API 사용하려면 별도의 개인 API를 사용해야 함
 
 ![image](https://user-images.githubusercontent.com/50766393/127772896-294acd3d-42dc-479c-8761-14c27a63e7f2.png)
 
