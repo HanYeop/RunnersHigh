@@ -1,5 +1,7 @@
 # RunnersHigh
 
+### ❗디자인 수정중, 기존 버전은 ver1 branch
+
 구글 맵을 이용한 달리기 기록 앱
 
 ![api](https://user-images.githubusercontent.com/50766393/127772947-fd9020f3-7781-4d00-baba-f3f0d655b7c2.png)
