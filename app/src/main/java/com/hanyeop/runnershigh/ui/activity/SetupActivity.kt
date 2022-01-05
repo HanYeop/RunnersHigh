@@ -3,8 +3,10 @@ package com.hanyeop.runnershigh.ui.activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.ActivitySetupBinding
 import com.hanyeop.runnershigh.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,9 @@ class SetupActivity : AppCompatActivity() {
         binding = ActivitySetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // blink 애니메이션
+        val anim = AnimationUtils.loadAnimation(this,R.anim.blink_animation)
+
         binding.apply {
             // 완료 버튼 클릭 시
             okButton.setOnClickListener {
@@ -42,6 +47,8 @@ class SetupActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+            // 애니메이션 재생
+            titleText.startAnimation(anim)
         }
 
     }
