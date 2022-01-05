@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.SetupActivity">
+    tools:context=".ui.activity.SetupActivity"
+    android:background="@color/backgroundColor">
 
     <TextView
         android:id="@+id/titleText"
@@ -14,6 +15,8 @@
         android:text="이름과 몸무게를\n 작성해주세요 !"
         android:textAlignment="center"
         android:textSize="36sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/goyang_r"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +36,7 @@
             android:id="@+id/nameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/editview_border"
             android:ems="10"
             android:maxLength="10"
             android:hint="이름"
@@ -44,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintStart_toStartOf="@+id/nameTextLayout"
         app:layout_constraintTop_toBottomOf="@+id/nameTextLayout">
 
@@ -52,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:background="@drawable/editview_border"
             android:hint="몸무게"
             android:inputType="numberDecimal" />
 
