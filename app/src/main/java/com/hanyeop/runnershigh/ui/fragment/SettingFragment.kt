@@ -38,7 +38,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         // 뷰바인딩
         _binding = FragmentSettingBinding.bind(view)
 
-        loadInformation()
+//        loadInformation()
 
         binding.apply{
             // 모두 삭제 버튼 클릭 시
@@ -56,53 +56,53 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 builder.show()
             }
 
-            // 변경 버튼 클릭 시
-            modifyButton.setOnClickListener {
-                hideKeyBoard()
-                val success = changingInformation()
-                if(success){
-                    Snackbar.make(view,"정보가 수정되었습니다.",Snackbar.LENGTH_SHORT).show()
-                }
-                else{
-                    Snackbar.make(view,"다시 입력해주세요.",Snackbar.LENGTH_SHORT).show()
-                }
-            }
+//            // 변경 버튼 클릭 시
+//            modifyButton.setOnClickListener {
+//                hideKeyBoard()
+//                val success = changingInformation()
+//                if(success){
+//                    Snackbar.make(view,"정보가 수정되었습니다.",Snackbar.LENGTH_SHORT).show()
+//                }
+//                else{
+//                    Snackbar.make(view,"다시 입력해주세요.",Snackbar.LENGTH_SHORT).show()
+//                }
+//            }
         }
     }
 
-    // 정보 불러와서 에디트뷰에
-    private fun loadInformation(){
-        val name = sharedPref.getString(KEY_NAME,"")
-        val weight = sharedPref.getFloat(KEY_WEIGHT,70f)
-        binding.apply {
-            nameText.setText(name)
-            weightText.setText(weight.toString())
-        }
-    }
-
-    // 이름, 몸무게 수정 기능
-    private fun changingInformation() : Boolean{
-        binding.apply {
-            val name = nameText.text.toString()
-            val weight = weightText.text.toString()
-
-            // 둘중 하나라도 비어 있다면
-            if (name.isEmpty() || weight.isEmpty()) {
-                return false
-            }
-
-            // 이름, 몸무게 수정
-            sharedPref.edit()
-                .putString(Constants.KEY_NAME, name)
-                .putFloat(Constants.KEY_WEIGHT, weight.toFloat())
-                .apply()
-
-            // 툴바 텍스트 랜덤 변경
-            val toolbarTitle : TextView= requireActivity().findViewById(R.id.toolbarTitle)
-            toolbarTitle.text = "${name}님, 안녕하세요!"
-            return true
-        }
-    }
+//    // 정보 불러와서 에디트뷰에
+//    private fun loadInformation(){
+//        val name = sharedPref.getString(KEY_NAME,"")
+//        val weight = sharedPref.getFloat(KEY_WEIGHT,70f)
+//        binding.apply {
+//            nameText.setText(name)
+//            weightText.setText(weight.toString())
+//        }
+//    }
+//
+//    // 이름, 몸무게 수정 기능
+//    private fun changingInformation() : Boolean{
+//        binding.apply {
+//            val name = nameText.text.toString()
+//            val weight = weightText.text.toString()
+//
+//            // 둘중 하나라도 비어 있다면
+//            if (name.isEmpty() || weight.isEmpty()) {
+//                return false
+//            }
+//
+//            // 이름, 몸무게 수정
+//            sharedPref.edit()
+//                .putString(Constants.KEY_NAME, name)
+//                .putFloat(Constants.KEY_WEIGHT, weight.toFloat())
+//                .apply()
+//
+//            // 툴바 텍스트 랜덤 변경
+//            val toolbarTitle : TextView= requireActivity().findViewById(R.id.toolbarTitle)
+//            toolbarTitle.text = "${name}님, 안녕하세요!"
+//            return true
+//        }
+//    }
 
     // 키보드 내리기
     private fun hideKeyBoard() {

@@ -10,5 +10,6 @@
 
     <color name="subColor">#FF7800</color>
     <color name="gray">#808080</color>
+    <color name="red">#FF0000</color>
     <color name="backgroundColor">#26808080</color>
 </resources>
