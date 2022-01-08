@@ -1,12 +1,15 @@
 package com.hanyeop.runnershigh.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.hanyeop.runnershigh.R
 import com.hanyeop.runnershigh.databinding.FragmentStatisticsBinding
+import com.hanyeop.runnershigh.util.Constants.Companion.TAG
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -94,11 +97,25 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
                     maxTimeProgressBar.isVisible = false
                 }
             }
-            
+
+            // 달리기 횟수 출력
             viewModel.totalRunning.observe(viewLifecycleOwner){
-                it?.let {
-                    numberOfTimesText.text = "횟수 : $it 회"
+                // 기록이 없으면 기본값 출력
+                if(it==0) {
+                    totalDistanceText.isVisible = true
+                    disProgressBar.isVisible = false
+                    totalTimeText.isVisible = true
+                    timeProgressBar.isVisible = false
+                    averageSpeedText.isVisible = true
+                    avgProgressBar.isVisible = false
+                    totalCaloriesText.isVisible = true
+                    calProgressBar.isVisible = false
+                    maxDistanceText.isVisible = true
+                    maxDisProgressBar.isVisible = false
+                    maxTimeText.isVisible = true
+                    maxTimeProgressBar.isVisible = false
                 }
+                numberOfTimesText.text = "횟수 : $it 회"
             }
         }
     }
