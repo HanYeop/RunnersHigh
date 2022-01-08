@@ -45,6 +45,8 @@
         android:layout_height="wrap_content"
         android:text="정렬 기준 : "
         android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/goyang_r"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/sortSpinner"
         app:layout_constraintEnd_toStartOf="@+id/sortSpinner"
