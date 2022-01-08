@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -42,6 +43,9 @@ class RunFragment : Fragment(R.layout.fragment_run) {
         // 뷰바인딩
         _binding = FragmentRunBinding.bind(view)
 
+        // 정렬 toast 메세지 옵션
+        val sortOptions = resources.getStringArray(R.array.sort_options)
+
         binding.apply {
 
             // fab 클릭 시 Tracking 화면으로 이등
@@ -73,6 +77,8 @@ class RunFragment : Fragment(R.layout.fragment_run) {
                         3 -> viewModel.sortRuns(SortType.AVG_SPEED)
                         4 -> viewModel.sortRuns(SortType.CALORIES_BURNED)
                     }
+                    // 정렬 toast 출력
+                    Toast.makeText(requireContext(), "기록이 ${sortOptions[pos]} 순으로 정렬되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
