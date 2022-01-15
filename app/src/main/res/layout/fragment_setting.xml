@@ -10,14 +10,14 @@
         android:id="@+id/profileEditButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="프로필 변경하기"
-        android:textSize="22sp"
-        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/goyang_r"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="프로필 변경하기"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightTextLayout" />
 
     <View
         android:id="@+id/view"
@@ -39,7 +39,7 @@
         android:text="선 색상 변경하기"
         android:layout_marginTop="20dp"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -63,7 +63,7 @@
         android:fontFamily="@font/goyang_r"
         android:text="기록 전부 삭제하기"
         android:textColor="@color/red"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -72,9 +72,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="개발자 블로그 : hanyeop.tistory.com"
+        android:text="hanyeop.tistory.com"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameTextLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+    <EditText
+        android:id="@+id/nameText"
+        android:background="@drawable/editview_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="이름" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/weightTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/kgText"
+        app:layout_constraintTop_toTopOf="@+id/nameTextLayout">
+
+        <EditText
+            android:id="@+id/weightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/editview_border"
+            android:ems="6"
+            android:hint="몸무게"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/kgText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="kg"
+        android:textColor="@color/subColor"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/weightTextLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weightTextLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
