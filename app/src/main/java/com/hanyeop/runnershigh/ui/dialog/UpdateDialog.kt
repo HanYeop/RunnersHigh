@@ -7,10 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.hanyeop.runnershigh.R
 
@@ -25,8 +22,8 @@ class UpdateDialog(context : Context,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_dialog)
 
-        var okButton : Button = findViewById(R.id.okButton)
-        var cancelButton : Button = findViewById(R.id.cancelButton)
+        var okButton : TextView = findViewById(R.id.okButton)
+        var cancelButton : TextView = findViewById(R.id.cancelButton)
         var editView : EditText = findViewById(R.id.titleEditView)
         var imageView : ImageView = findViewById(R.id.imageView)
 
