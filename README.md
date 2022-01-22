@@ -12,6 +12,9 @@
 
 [APK 다운로드](https://github.com/HanYeop/RunnersHigh/files/7121790/RunnersHigh.zip)
 
+기존의 코드를 참고하여 제작되었습니다 
+
+https://github.com/philipplackner/RunningAppYT
 
 ## 사용한 라이브러리
 * Android Architecture Components
