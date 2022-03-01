@@ -168,5 +168,49 @@
         app:layout_constraintStart_toEndOf="@+id/greenCircle"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
+    <ImageView
+        android:id="@+id/redCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_24"
+        app:layout_constraintEnd_toEndOf="@+id/redCircle"
+        app:layout_constraintStart_toStartOf="@+id/redCircle"
+        app:layout_constraintTop_toBottomOf="@+id/redCircle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/blueCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_24"
+        app:layout_constraintEnd_toEndOf="@+id/blueCircle"
+        app:layout_constraintStart_toStartOf="@+id/blueCircle"
+        app:layout_constraintTop_toBottomOf="@+id/blueCircle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/greenCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_24"
+        app:layout_constraintEnd_toEndOf="@+id/greenCircle"
+        app:layout_constraintStart_toStartOf="@+id/greenCircle"
+        app:layout_constraintTop_toBottomOf="@+id/greenCircle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/blackCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_24"
+        app:layout_constraintEnd_toEndOf="@+id/blackCircle"
+        app:layout_constraintStart_toStartOf="@+id/blackCircle"
+        app:layout_constraintTop_toBottomOf="@+id/blackCircle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
