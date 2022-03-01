@@ -102,8 +102,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toStartOf="@+id/kgText"
+        app:layout_constraintStart_toEndOf="@+id/nameTextLayout"
         app:layout_constraintTop_toTopOf="@+id/nameTextLayout">
 
         <EditText
