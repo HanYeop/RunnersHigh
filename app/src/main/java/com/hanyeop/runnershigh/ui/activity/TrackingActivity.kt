@@ -3,6 +3,7 @@ package com.hanyeop.runnershigh.ui.activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.view.View
@@ -21,9 +22,9 @@ import com.hanyeop.runnershigh.service.TrackingService
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_PAUSE_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
 import com.hanyeop.runnershigh.util.Constants.Companion.ACTION_STOP_SERVICE
+import com.hanyeop.runnershigh.util.Constants.Companion.KEY_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.KEY_WEIGHT
 import com.hanyeop.runnershigh.util.Constants.Companion.MAP_ZOOM
-import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_COLOR
 import com.hanyeop.runnershigh.util.Constants.Companion.POLYLINE_WIDTH
 import com.hanyeop.runnershigh.util.TrackingUtility
 import com.hanyeop.runnershigh.viewmodel.RunViewModel
@@ -57,12 +58,18 @@ class TrackingActivity : AppCompatActivity() {
     // 총 이동거리
     private var sumDistance = 0f
 
+    // 선 색상
+    private var POLYLINE_COLOR = Color.RED
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // 뷰바인딩
         binding = ActivityTrackingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 색상 정보 불러오기
+        colorLoad()
 
         binding.apply {
             mapView.onCreate(savedInstanceState)
@@ -300,6 +307,17 @@ class TrackingActivity : AppCompatActivity() {
         }
         else{
             super.onBackPressed()
+        }
+    }
+
+    // 색상 정보 불러오기
+    private fun colorLoad(){
+        val colorState = sharedPref.getInt(KEY_COLOR,1)
+        when (colorState){
+            1 -> POLYLINE_COLOR = Color.RED
+            2 -> POLYLINE_COLOR = Color.BLUE
+            3 -> POLYLINE_COLOR = Color.GREEN
+            4 -> POLYLINE_COLOR = Color.BLACK
         }
     }
 

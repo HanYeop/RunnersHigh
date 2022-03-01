@@ -31,7 +31,6 @@ class Constants {
         /**
          * 경로 표시 옵션
          */
-        const val POLYLINE_COLOR = Color.RED
         const val POLYLINE_WIDTH = 10f
         const val MAP_ZOOM = 15f
 
