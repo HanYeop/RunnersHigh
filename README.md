@@ -8,7 +8,8 @@
 
 ![달리기 기록 화면](https://user-images.githubusercontent.com/50766393/156168245-b44792ca-a5f6-403b-85c3-3debc8f92574.png)
 
-[APK 다운로드](https://github.com/HanYeop/RunnersHigh/files/7121790/RunnersHigh.zip)
+[APK 다운로드 (ver1)](https://github.com/HanYeop/RunnersHigh/files/7121790/RunnersHigh.zip)
+ver2 추가예정...
 
 기존의 코드를 참고하여 제작되었습니다 
 
